@@ -15,6 +15,9 @@
         android:theme="@style/Theme.MaterialComponents.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".addMovie"
+            android:exported="false" />
+        <activity
             android:name=".AddActivity"
             android:exported="false" />
         <activity
