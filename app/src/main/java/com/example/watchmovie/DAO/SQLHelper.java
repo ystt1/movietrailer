@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 public class SQLHelper extends SQLiteOpenHelper {
     Context context;
     public SQLHelper( Context context) {
-        super(context, "ToDoDB", null, 2);
+        super(context, "ToDoDB", null, 3);
     }
 
 
