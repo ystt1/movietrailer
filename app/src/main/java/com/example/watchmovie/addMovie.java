@@ -15,6 +15,7 @@ import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -39,6 +40,8 @@ public class addMovie extends AppCompatActivity {
     CateItemDAO cateItemDAO;
     int cateId=0;
 
+    SearchView searchMovie;
+
     Button showDialogbtn,confirmAdd;
     ImageView addBanner;
     TextInputEditText bannerInput,trailerInput,nameInput;
@@ -47,8 +50,9 @@ public class addMovie extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie);
         showDialogbtn=findViewById(R.id.add_movie);
+        movieRecycler=findViewById(R.id.movie_recycler);
         cateId= getIntent().getIntExtra("categoryId",0);
-
+        searchMovie=findViewById(R.id.search_movie);
         cateItemDAO=new CateItemDAO(context);
         cateItemList.clear();
 
@@ -59,11 +63,12 @@ public class addMovie extends AppCompatActivity {
 
     void setMovieAdapter(List<CateItem> cateItemList)
     {
-        movieRecycler=findViewById(R.id.movie_recycler);
+
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         movieRecycler.setLayoutManager(layoutManager);
         movieAdapter=new MovieRecycler(this,cateItemList);
         movieRecycler.setAdapter(movieAdapter);
+        setSearchMovieChange();
     }
 
     void setOnClickAddMovie()
@@ -113,6 +118,23 @@ public class addMovie extends AppCompatActivity {
                     }
                 });
                 dialog.show();
+            }
+        });
+    }
+
+    void setSearchMovieChange()
+    {
+        searchMovie.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                    return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                cateItemList=cateItemDAO.getListItemNameLike(s);
+                setMovieAdapter(cateItemList);
+                return false;
             }
         });
     }
