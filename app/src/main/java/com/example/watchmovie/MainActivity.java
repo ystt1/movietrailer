@@ -29,6 +29,7 @@ import com.example.watchmovie.model.AllCate;
 import com.example.watchmovie.model.AnhBia;
 import com.example.watchmovie.model.CateItem;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -71,6 +72,13 @@ public class MainActivity extends AppCompatActivity {
 
     CateDAO cateDAO;
 
+    TabItem tabItem1,tabItem2,tabItem3;
+
+    List<AllCate> cateListForBanner=new ArrayList<>();
+
+    List<CateItem> bannerListItem=new ArrayList<>();
+    List<AllCate> cateListBelow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -83,85 +91,31 @@ public class MainActivity extends AppCompatActivity {
         imgMenu=findViewById(R.id.menu_icon);
         searchView=findViewById(R.id.search_bar);
 
-
         anhBiaDAO=new AnhBiaDAO(context);
-
+    bannerListItem.clear();
         homeAnhBiaList.clear();
         homeAnhBiaList=anhBiaDAO.getListAnhBia();
-
         cateItemDAO=new CateItemDAO(context);
-
+        cateDAO=new CateDAO(context);
         homeCateItemList.clear();
         homeCateItemList=cateItemDAO.getListCateItem();
+        cateListForBanner.clear();
+        cateListForBanner=cateDAO.getListCateForBanner();
+        cateListBelow=cateDAO.getListCateBelowBanner();
+        setBanner();
+        onChangeBannerTab();
+        setMainRecyclerView(cateListBelow);
 
 
 
-//        homeAnhBiaList.add(new AnhBia(1,"Phan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-mayabc-800x450.jpg",""));
-//        homeAnhBiaList.add(new AnhBia(2,"Quoc","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may1-800x450.jpg",""));
-//        homeAnhBiaList.add(new AnhBia(3,"Tuan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may2-800x450.jpg",""));
-//        homeAnhBiaList.add(new AnhBia(4,"Dep","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may3-800x450.jpg",""));
-//        homeAnhBiaList.add(new AnhBia(5,"Giai","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
-
-        setBannerMovieViewPager2Adapter(homeCateItemList);
 
 
-        showAnhBiaList=new ArrayList<>();
-        showAnhBiaList.add(new AnhBia(1,"Phan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may5-800x450.jpg",""));
-        showAnhBiaList.add(new AnhBia(2,"Quoc","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
-        showAnhBiaList.add(new AnhBia(3,"Tuan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may2-800x450.jpg",""));
-        showAnhBiaList.add(new AnhBia(4,"Dep","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may3-800x450.jpg",""));
-        showAnhBiaList.add(new AnhBia(5,"Giai","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
 
-        tvAnhBiaList=new ArrayList<>();
-        tvAnhBiaList.add(new AnhBia(1,"Phan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may3-800x450.jpg",""));
-        tvAnhBiaList.add(new AnhBia(2,"Quoc","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
-        tvAnhBiaList.add(new AnhBia(3,"Tuan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may2-800x450.jpg",""));
-        tvAnhBiaList.add(new AnhBia(4,"Dep","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may3-800x450.jpg",""));
-        tvAnhBiaList.add(new AnhBia(5,"Giai","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
 
-        childAnhBiaList=new ArrayList<>();
-        childAnhBiaList.add(new AnhBia(1,"Phan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may2-800x450.jpg",""));
-        childAnhBiaList.add(new AnhBia(2,"Quoc","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
-        childAnhBiaList.add(new AnhBia(3,"Tuan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may2-800x450.jpg",""));
-        childAnhBiaList.add(new AnhBia(4,"Dep","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may3-800x450.jpg",""));
-        childAnhBiaList.add(new AnhBia(5,"Giai","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg",""));
-//        cateTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//            @Override
-//            public void onTabSelected(TabLayout.Tab tab) {
-//                switch (tab.getPosition()) {
-//                    case 1:
-//                        setScrollDefaultView();
-//                        setBannerMovieViewPager2Adapter(homeCateItemList);
-//                        return;
-//                    case 2:
-//                        setScrollDefaultView();
-//                        setBannerMovieViewPager2Adapter(homeCateItemList);
-//                        return;
-//                    case 3:
-//                        setScrollDefaultView();
-//                        setBannerMovieViewPager2Adapter(homeCateItemList);
-//                        return;
-//                    default:
-//                        setScrollDefaultView();
-//                        setBannerMovieViewPager2Adapter(homeCateItemList);
+
+
+
 //
-//                }
-//            }
-//            @Override
-//            public void onTabUnselected(TabLayout.Tab tab) {
-//            }
-//
-//            @Override
-//            public void onTabReselected(TabLayout.Tab tab) {
-//            }
-//        });
-
-//        List<CateItem> homeCateList=new ArrayList<>();
-//        homeCateList.add(new CateItem(1,"Phan","https://img6.thuthuatphanmem.vn/uploads/2022/04/15/hinh-nen-yasuo-4k-dep-nhat_040419375.jpg","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",1,0));
-//        homeCateList.add(new CateItem(2,"Quoc","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may1-800x450.jpg","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",1,0));
-//        homeCateList.add(new CateItem(3,"Tuan","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may4-800x450.jpg","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",1,0));
-//        homeCateList.add(new CateItem(4,"DZ","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may5-800x450.jpg","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",1,0));
-//        homeCateList.add(new CateItem(5,"DaZ","https://cdn.tgdd.vn/2020/07/content/bo-anh-yasuo-lol-dep-va-chat-de-lam-hinh-nen-dien-thoai-may3-800x450.jpg","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",1,0));
 
 //        cateList=new ArrayList<>();
 
@@ -176,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         cateList1.clear();
         cateDAO=new CateDAO(context);
         cateList1=cateDAO.getListCate();
-        setMainRecyclerView(cateList1);
+        //setMainRecyclerView(cateList1);
 
 
         imgMenu.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +142,53 @@ public class MainActivity extends AppCompatActivity {
 
         onSubmitSearchbar();
 
+    }
+
+    void setBanner()
+    {
+       for(int i=0; i < cateListForBanner.size(); i++) {
+           cateTab.getTabAt(i).setText(cateListForBanner.get(i).getCateTitle());
+       }
+       changeBannerList(cateListForBanner.get(0).getCateId());
+    }
+
+    void changeBannerList(int id)
+    {
+        bannerListItem=cateItemDAO.getListCateItemWithCateId(id);
+        setBannerMovieViewPager2Adapter(bannerListItem);
+    }
+
+    void onChangeBannerTab()
+    {
+        cateTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                switch (tab.getPosition()) {
+                    case 1:
+                        setScrollDefaultView();
+                        changeBannerList(cateListForBanner.get(1).getCateId());
+                        setBannerMovieViewPager2Adapter(bannerListItem);
+                        return;
+                    case 2:
+                        setScrollDefaultView();
+                        changeBannerList(cateListForBanner.get(2).getCateId());
+                        setBannerMovieViewPager2Adapter(bannerListItem);
+                        return;
+                    default:
+                        setScrollDefaultView();
+                        changeBannerList(cateListForBanner.get(0).getCateId());
+                        setBannerMovieViewPager2Adapter(bannerListItem);
+
+                }
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
 
     void onSubmitSearchbar()
@@ -209,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     void showMenu()
@@ -265,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
         bannerMovieViewPager.setAdapter(bannerMovieViewPager2Adapter);
         tabLayout.setupWithViewPager(bannerMovieViewPager);
         Timer timeSlide=new Timer();
-        timeSlide.scheduleAtFixedRate(new AutoSlider(),4000,6000);
+        timeSlide.scheduleAtFixedRate(new AutoSlider(),20000,6000);
         tabLayout.setupWithViewPager(bannerMovieViewPager,true);
     }
 
@@ -275,7 +278,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (bannerMovieViewPager.getCurrentItem() < homeAnhBiaList.size() - 1)
+                    if (bannerMovieViewPager.getCurrentItem() < bannerListItem.size() - 1)
                     {
                         bannerMovieViewPager.setCurrentItem(bannerMovieViewPager.getCurrentItem()+1);
                     } else {
@@ -286,12 +289,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void setMainRecyclerView(List<AllCate> cateList1)
+    public void setMainRecyclerView(List<AllCate> cateListBelow)
     {
         mainRecyclerView =findViewById(R.id.recycle_main);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         mainRecyclerView.setLayoutManager(layoutManager);
-        mainRecycleAdapter=new MainRecycleAdapter(this,cateList1);
+        mainRecycleAdapter=new MainRecycleAdapter(this,cateListBelow);
         mainRecyclerView.setAdapter(mainRecycleAdapter);
     }
 

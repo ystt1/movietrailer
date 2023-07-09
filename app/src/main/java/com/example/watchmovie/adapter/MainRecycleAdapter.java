@@ -22,7 +22,7 @@ import java.util.List;
 
 public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.MainViewHolder> {
 
-    List<CateItem> cateItemList=new ArrayList<>();
+
 
     CateItemDAO cateItemDAO;
     Context context;
@@ -32,6 +32,7 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
     {
         this.context=context;
         this.cateList=cateList;
+        this.cateItemDAO=new CateItemDAO(this.context);
     }
 
     @NonNull
@@ -43,14 +44,14 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
     holder.cateName.setText(cateList.get(position).getCateTitle());
-    cateItemList.clear();
-        cateItemDAO=new CateItemDAO(context);
-    cateItemList=cateItemDAO.getListCateItem();
+
+    List<CateItem> cateItemList=cateItemDAO.getListCateItemWithCateId(cateList.get(position).getCateId());
     setCateItem(holder.cateItem,cateItemList);
     }
 
     @Override
     public int getItemCount() {
+
         return cateList.size();
     }
 
@@ -64,8 +65,6 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
             cateName=itemView.findViewById(R.id.item_cate);
             cateItem=itemView.findViewById(R.id.item_recycler);
         }
-
-
     }
 
     private void setCateItem(RecyclerView recyclerView, List<CateItem> cateItemList)

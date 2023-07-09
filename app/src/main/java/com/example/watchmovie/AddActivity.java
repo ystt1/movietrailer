@@ -9,10 +9,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 
 import com.example.watchmovie.DAO.CateDAO;
 import com.example.watchmovie.adapter.CategoryRecycler;
 import com.example.watchmovie.model.AllCate;
+import com.example.watchmovie.model.CateItem;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.List;
 public class AddActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
+    SearchView searchCate;
     CategoryRecycler categoryRecycler;
     Context context=this;
 
@@ -38,22 +41,22 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-
+        searchCate=findViewById(R.id.search_cate);
         showDialogbtn=findViewById(R.id.add_category_button);
 
         cateList.clear();
         cateDAO=new CateDAO(context);
-
-        setAddAdapter();
+        cateList=cateDAO.getListCate();
+        setAddAdapter(cateList);
         setOnClickAddCate();
-
+        setSearch_cateChange();
 
     }
 
 
-    void setAddAdapter()
+    void setAddAdapter(List<AllCate> cateList)
     {
-        cateList=cateDAO.getListCate();
+
         recyclerView=findViewById(R.id.cate_recycler);
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
@@ -78,11 +81,29 @@ public class AddActivity extends AppCompatActivity {
                         if(name.equals("")){}
                         else{
                             cateDAO.addCateWithNameOnly(name);
-                            setAddAdapter();
+                            setAddAdapter(cateList);
                         }
                     }
                 });
                 dialog.show();
+            }
+        });
+    }
+
+    void setSearch_cateChange()
+    {
+        searchCate.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                cateList=cateDAO.searchCate(s);
+                setAddAdapter(cateList);
+                return false;
             }
         });
     }

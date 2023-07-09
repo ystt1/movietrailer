@@ -58,26 +58,25 @@
             app:tabTextColor="#9B9696">
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Home"
+                android:text="tab1"
                 tools:layout_editor_absoluteX="-1dp"
                 tools:layout_editor_absoluteY="61dp" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shows" />
+                android:text="tab2" />
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/tab3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TV" />
+                android:text="tab3" />
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trẻ Em" />
         </com.google.android.material.tabs.TabLayout>
 
 

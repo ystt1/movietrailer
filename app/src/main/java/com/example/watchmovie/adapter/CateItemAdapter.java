@@ -2,6 +2,7 @@ package com.example.watchmovie.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,15 +17,18 @@ import com.example.watchmovie.MovieDetails;
 import com.example.watchmovie.R;
 import com.example.watchmovie.model.CateItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CateItemAdapter extends RecyclerView.Adapter<CateItemAdapter.ItemViewHolder> {
     Context context;
-    List<CateItem> cateItemList;
+    List<CateItem> cateItemList=new ArrayList<>();
 
     public CateItemAdapter(Context context, List<CateItem> cateItemList) {
+        this.cateItemList.clear();
         this.context = context;
         this.cateItemList = cateItemList;
+
     }
 
     @NonNull
@@ -36,19 +40,19 @@ public class CateItemAdapter extends RecyclerView.Adapter<CateItemAdapter.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Glide.with(context).load(cateItemList.get(position).getImgUrl()).into(holder.imgItem);
+            Log.e("fuck", String.valueOf(position));
         int flag=position;
-
-        holder.imgItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i=new Intent(context, MovieDetails.class);
-                i.putExtra("movieId",String.valueOf(cateItemList.get(flag).getId()));
-                i.putExtra("movieName",cateItemList.get(flag).getMovieName());
-                i.putExtra("movieImageUrl",cateItemList.get(flag).getImgUrl());
-                i.putExtra("movieFileUrl",cateItemList.get(flag).getFileurl());
-                context.startActivity(i);
-            }
-        });
+//        holder.imgItem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent i=new Intent(context, MovieDetails.class);
+//                i.putExtra("movieId",String.valueOf(cateItemList.get(flag).getId()));
+//                i.putExtra("movieName",cateItemList.get(flag).getMovieName());
+//                i.putExtra("movieImageUrl",cateItemList.get(flag).getImgUrl());
+//                i.putExtra("movieFileUrl",cateItemList.get(flag).getFileurl());
+//                context.startActivity(i);
+//            }
+//        });
     }
 
     @Override
@@ -57,8 +61,6 @@ public class CateItemAdapter extends RecyclerView.Adapter<CateItemAdapter.ItemVi
     }
 
     public  static  final  class ItemViewHolder extends RecyclerView.ViewHolder{
-
-
         ImageView imgItem;
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
