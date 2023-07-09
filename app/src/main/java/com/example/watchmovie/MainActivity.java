@@ -89,8 +89,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent i=new Intent(context,LoginAcivity.class);
-        startActivity(i);
+;
 
 
         tabLayout=findViewById(R.id.tab_autoChange);
