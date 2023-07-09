@@ -19,8 +19,8 @@ public class MovieDetails extends AppCompatActivity {
     ImageView imageView;
     TextView textView;
     Button button;
-    String mName,mImg,mFile,mId;
-    int iYeuThich;
+    String mName,mImg,mFile;
+    int iYeuThich,mId;
     Context context=this;
     CateItemDAO cateItemDAO;
 
@@ -36,7 +36,7 @@ public class MovieDetails extends AppCompatActivity {
         textViewYeuThich=findViewById(R.id.tvYeuThich);
 
 
-        mId=getIntent().getStringExtra("movieId");
+        mId=getIntent().getIntExtra("movieId",0);
         mName=getIntent().getStringExtra("movieName");
         mImg=getIntent().getStringExtra("movieImageUrl");
         mFile=getIntent().getStringExtra("movieFileUrl");
@@ -59,7 +59,7 @@ public class MovieDetails extends AppCompatActivity {
 
     void setTextViewYeuThich()
     {
-        iYeuThich=cateItemDAO.getYeuThich(Integer.parseInt(mId));
+        iYeuThich=cateItemDAO.getYeuThich(mId);
         if(iYeuThich!=1)
         {
             textViewYeuThich.setText("Thích");
@@ -78,7 +78,7 @@ public class MovieDetails extends AppCompatActivity {
                     iYeuThich = 0;
                 else
                     iYeuThich=1;
-                cateItemDAO.setyeuThich(Integer.parseInt(mId),iYeuThich);
+                cateItemDAO.setyeuThich(mId,iYeuThich);
                 setTextViewYeuThich();
             }
         });
