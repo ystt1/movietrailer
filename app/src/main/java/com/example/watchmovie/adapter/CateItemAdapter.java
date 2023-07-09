@@ -40,19 +40,18 @@ public class CateItemAdapter extends RecyclerView.Adapter<CateItemAdapter.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         Glide.with(context).load(cateItemList.get(position).getImgUrl()).into(holder.imgItem);
-            Log.e("fuck", String.valueOf(position));
         int flag=position;
-//        holder.imgItem.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent i=new Intent(context, MovieDetails.class);
-//                i.putExtra("movieId",String.valueOf(cateItemList.get(flag).getId()));
-//                i.putExtra("movieName",cateItemList.get(flag).getMovieName());
-//                i.putExtra("movieImageUrl",cateItemList.get(flag).getImgUrl());
-//                i.putExtra("movieFileUrl",cateItemList.get(flag).getFileurl());
-//                context.startActivity(i);
-//            }
-//        });
+        holder.imgItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(context, MovieDetails.class);
+                i.putExtra("movieId",String.valueOf(cateItemList.get(flag).getId()));
+                i.putExtra("movieName",cateItemList.get(flag).getMovieName());
+                i.putExtra("movieImageUrl",cateItemList.get(flag).getImgUrl());
+                i.putExtra("movieFileUrl",cateItemList.get(flag).getFileurl());
+                context.startActivity(i);
+            }
+        });
     }
 
     @Override
