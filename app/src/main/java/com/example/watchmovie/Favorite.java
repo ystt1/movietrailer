@@ -46,14 +46,12 @@ public class Favorite extends AppCompatActivity {
         String flag= getIntent().getExtras().getString("key");
         if(flag.equals(""))
         {
-
-            cateItemList=cateItemDAO.getListCateItem();
-            Log.e("Tag", String.valueOf(cateItemList.size()));
+            cateItemList=cateItemDAO.getListItemYeuThich();
             setFavoritesRecyclerAdapter(cateItemList);
         }
         else
         {
-          textView.setText("Tìm kiếm");
+            textView.setText("Tìm kiếm");
             cateItemList=cateItemDAO.getListItemNameLike(flag);
 
             setFavoritesRecyclerAdapter(cateItemList);
