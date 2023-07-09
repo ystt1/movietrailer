@@ -71,7 +71,7 @@ public class CateDAO {
 
     public void addCateWithNameOnly(String name)
     {
-        int id= getListCate().size();
+        int id= getMaxId();
         ContentValues values=new ContentValues();
         values.put("cateID",id);
         values.put("cateTitle",name);
@@ -135,5 +135,17 @@ public class CateDAO {
         }
 
         return list;
+    }
+
+    public int getMaxId()
+    {
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("Select Max(cateID) from Category",null);
+        if(cursor.getCount()>0)
+        {
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
+        return -1;
     }
 }

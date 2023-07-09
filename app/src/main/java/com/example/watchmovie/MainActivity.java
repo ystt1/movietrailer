@@ -9,6 +9,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -32,6 +34,8 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -84,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent i=new Intent(context,LoginAcivity.class);
+        startActivity(i);
+
+
         tabLayout=findViewById(R.id.tab_autoChange);
         cateTab=findViewById(R.id.cateTab);
         appBarLayout=findViewById(R.id.appbar);
@@ -304,4 +313,6 @@ public class MainActivity extends AppCompatActivity {
         nestedScrollView.scrollTo(0,0);
         appBarLayout.setExpanded(true);
     }
+
+
 }

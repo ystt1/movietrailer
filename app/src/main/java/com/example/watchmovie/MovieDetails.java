@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -26,6 +27,8 @@ public class MovieDetails extends AppCompatActivity {
 
     Button textViewYeuThich;
 
+    RatingBar ratingBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +37,7 @@ public class MovieDetails extends AppCompatActivity {
         textView=findViewById(R.id.tvMovie);
         button=findViewById(R.id.playButton);
         textViewYeuThich=findViewById(R.id.tvYeuThich);
-
+        ratingBar=findViewById(R.id.ratingBar);
 
         mId=getIntent().getIntExtra("movieId",0);
         mName=getIntent().getStringExtra("movieName");
@@ -53,8 +56,21 @@ public class MovieDetails extends AppCompatActivity {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mFile)));
             }
         });
+        ratingBarChange();
         setTextViewYeuThich();
         onClickYeuThichBtn();
+    }
+
+
+
+    void ratingBarChange()
+    {
+        ratingBar.setRating(0);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+            }
+        });
     }
 
     void setTextViewYeuThich()

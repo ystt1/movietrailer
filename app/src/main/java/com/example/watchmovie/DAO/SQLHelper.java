@@ -4,9 +4,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.example.watchmovie.R;
+
+import java.io.ByteArrayOutputStream;
 
 public class SQLHelper extends SQLiteOpenHelper {
     Context context;
@@ -33,7 +39,7 @@ public class SQLHelper extends SQLiteOpenHelper {
         CreateBanner(sqLiteDatabase);
         CreateCate(sqLiteDatabase);
         CreateMovie(sqLiteDatabase);
-
+        CreateUser(sqLiteDatabase);
     }
 
     @Override
@@ -130,6 +136,25 @@ public class SQLHelper extends SQLiteOpenHelper {
                 "\n" +
                 "(25,\"Nope\",\"https://upload.wikimedia.org/wikipedia/en/thumb/e/e6/Nope_%28film%29_poster.jpg/220px-Nope_%28film%29_poster.jpg\",\"https://www.youtube.com/watch?v=nwQo9RWVhnE\",5,0)\n" +
                 "\n" ;
+        sqLiteDatabase.execSQL(insertData);//them du lieu banner o muc home
+    }
+
+
+    private void CreateUser(SQLiteDatabase sqLiteDatabase)
+    {
+        String sql="CREATE TABLE User(\n" +
+                "  id interger PRIMARY KEY,\n" +
+                "    userName text,\n" +
+                "    passWord text,\n" +
+                "    avatar blob,\n" +
+                "    displayName text,\n" +
+                "    isAdmin bool\n" +
+                ")";
+        sqLiteDatabase.execSQL(sql);//tao bang
+
+
+
+        String insertData=("INSERT into User VALUES(0,\"Tuan\",\"tuan4105\",null,\"admin\",true)");
         sqLiteDatabase.execSQL(insertData);//them du lieu banner o muc home
     }
 }
