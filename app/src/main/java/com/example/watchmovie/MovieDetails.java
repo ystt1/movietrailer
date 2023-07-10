@@ -37,10 +37,10 @@ public class MovieDetails extends AppCompatActivity {
     int idUser;
     InteractionDAO interactionDAO;
     ImageView imageView;
-    TextView textView;
+    TextView textView,tvMore;
     Button button;
     String mName,mImg,mFile;
-    int iYeuThich,mId;
+    int iYeuThich,mId,iComment=1;
     Context context=this;
     CateItemDAO cateItemDAO;
 
@@ -66,6 +66,7 @@ public class MovieDetails extends AppCompatActivity {
             startActivity(i);
         }else {
 
+
             AnhXaVaKhaiBao();
             onClickWatchTrailer();
             setTextViewYeuThich();
@@ -74,7 +75,19 @@ public class MovieDetails extends AppCompatActivity {
             CommentRecycler();
             onCLickComment();
             onSwipe();
+            onClickMoreComment();
         }
+    }
+
+    void onClickMoreComment()
+    {
+        tvMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iComment+=1;
+                CommentRecycler();
+            }
+        });
     }
 
     void ratingBarChange()
@@ -132,7 +145,7 @@ public class MovieDetails extends AppCompatActivity {
     void CommentRecycler()
     {
 
-        commentList=commentDAO.getListComment(idUser,mId);
+        commentList=commentDAO.getListComment(idUser,mId,iComment);
 
         RecyclerView recyclerView=findViewById(R.id.recycler_comment);
         CommentRecyclerAdapter commentRecyclerAdapter;
@@ -180,6 +193,7 @@ public class MovieDetails extends AppCompatActivity {
         ratingBar=findViewById(R.id.ratingBar);
         comment=findViewById(R.id.Input_comment);
         commentLayout=findViewById(R.id.Input_comment_layout);
+        tvMore=findViewById(R.id.tv_More);
 
         idUser=BienToanCuc.getInstance().getLoggedInUserID();
 

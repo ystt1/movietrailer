@@ -49,11 +49,11 @@ public class CommentDAO {
         database.insert("Comment", null, values);
     }
 
-    public List<Comment> getListComment(int userID,int movieId)
+    public List<Comment> getListComment(int userID,int movieId,int limit)
     {
         database = sqlHelper.getReadableDatabase();
         List<Comment> commentList=new ArrayList<>();
-        Cursor cursor = database.rawQuery("SELECT * FROM Comment WHERE MovieId = " + movieId +" ORDER BY id DESC" , null);
+        Cursor cursor = database.rawQuery("SELECT * FROM Comment WHERE MovieId = " + movieId +" ORDER BY id DESC LIMIT "+limit*5 , null);
         if (cursor.getCount()>0) {
             cursor.moveToFirst();
             do{

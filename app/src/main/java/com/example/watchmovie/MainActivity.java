@@ -217,6 +217,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_logout:
                         onClickLogOut();
                         break;
+                    case R.id.menu_account:
+                        changeToAccountAct();
+                        break;
                     default:
                         break;
                 }
@@ -247,6 +250,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         popupMenu.show();
+    }
+
+    void changeToAccountAct()
+    {
+        Intent i=new Intent(context,AccountActivity.class);
+        context.startActivity(i);
     }
 
     void changeToAddAct()
