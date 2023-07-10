@@ -116,4 +116,17 @@ public class UserDAO {
         }
         return -1;
     }
+    public String getNameWithId(int id)
+    {
+        database=sqlHelper.getReadableDatabase();
+        String name="";
+        Cursor cursor=database.rawQuery("SELECT userName FROM User WHERE id="+id,null);
+        if(cursor.getCount()>0)
+        {
+            cursor.moveToFirst();
+            name=cursor.getString(0);
+        }
+        return name;
+    }
+
 }

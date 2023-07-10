@@ -4,15 +4,26 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import com.example.watchmovie.model.CateItem;
+import com.example.watchmovie.model.Comment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CommentDAO {
+    UserDAO userDAO;
+    Context context;
     private SQLHelper sqlHelper;
     private SQLiteDatabase database;
 
     public CommentDAO(Context context)
     {
+        this.context=context;
         sqlHelper=new SQLHelper(context);
         database=sqlHelper.getWritableDatabase();
+        userDAO=new UserDAO(context);
     }
 
     public int getMaxId()
@@ -32,9 +43,27 @@ public class CommentDAO {
         int id=getMaxId()+1;
         ContentValues values = new ContentValues();
         values.put("id",id);
-        values.put("UserId",id);
-        values.put("MovieId",id);
-        values.put("comment",id);
+        values.put("UserId",userId);
+        values.put("MovieId",movieId);
+        values.put("comment",comment);
         database.insert("Comment", null, values);
+    }
+
+    public List<Comment> getListComment(int userID,int movieId)
+    {
+        database = sqlHelper.getReadableDatabase();
+        List<Comment> commentList=new ArrayList<>();
+        Cursor cursor = database.rawQuery("SELECT * FROM Comment WHERE MovieId = " + movieId +" ORDER BY id DESC" , null);
+        if (cursor.getCount()>0) {
+            cursor.moveToFirst();
+            do{
+                int idUser=cursor.getInt(1);
+                String text=cursor.getString(3);
+                String name= userDAO.getNameWithId(idUser);
+                commentList.add(new Comment(name,text));
+
+            }while (cursor.moveToNext());
+        }
+        return commentList;
     }
 }

@@ -52,45 +52,14 @@ public class MovieDetails extends AppCompatActivity {
     TextInputLayout commentLayout;
 
     CommentDAO commentDAO;
+
+    List<Comment> commentList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        imageView=findViewById(R.id.movie_img);
-        textView=findViewById(R.id.tvMovie);
-        button=findViewById(R.id.playButton);
-        textViewYeuThich=findViewById(R.id.tvYeuThich);
-        ratingBar=findViewById(R.id.ratingBar);
-        comment=findViewById(R.id.Input_comment);
-        commentLayout=findViewById(R.id.Input_comment_layout);
-
-
-
-
-        idUser=BienToanCuc.getInstance().getLoggedInUserID();
-        mId=getIntent().getIntExtra("movieId",0);
-        mName=getIntent().getStringExtra("movieName");
-        mImg=getIntent().getStringExtra("movieImageUrl");
-        mFile=getIntent().getStringExtra("movieFileUrl");
-
-        Glide.with(this).load(mImg).into(imageView);
-        textView.setText(mName);
-        cateItemDAO=new CateItemDAO(context);
-        interactionDAO=new InteractionDAO(context);
-        commentDAO=new CommentDAO(context);
-
-
-        iYeuThich=interactionDAO.getYeuThich(idUser, mId);
-        mRating= interactionDAO.getRating(idUser,mId);
-        ratingBar.setRating(mRating);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mFile)));
-            }
-        });
-
+        AnhXaVaKhaiBao();
+        onClickWatchTrailer();
         setTextViewYeuThich();
         onClickYeuThichBtn();
         ratingBarChange();
@@ -135,13 +104,8 @@ public class MovieDetails extends AppCompatActivity {
 
     void CommentRecycler()
     {
-        List<Comment> commentList=new ArrayList<>();
 
-        commentList.add(new Comment("Phan Quoc Tuan","phim hay tuyet zoi"));
-        commentList.add(new Comment("Phan Quoc Tuan 2","phim hay tuyet zoi 2"));
-        commentList.add(new Comment("Phan Quoc Tuan 3","phim hay tuyet zoi 3"));
-        commentList.add(new Comment("Phan Quoc Tuan 4","phim hay tuyet zoi 4"));
-        commentList.add(new Comment("Phan Quoc Tuan5 ","phim hay tuyet zoi 5"));
+        commentList=commentDAO.getListComment(idUser,mId);
 
         RecyclerView recyclerView=findViewById(R.id.recycler_comment);
         CommentRecyclerAdapter commentRecyclerAdapter;
@@ -163,8 +127,53 @@ public class MovieDetails extends AppCompatActivity {
                 {
                     commentDAO.addComment(idUser,mId,text);
                     comment.setText("");
+                    CommentRecycler();
                 }
             }
         });
     }
+
+    void onClickWatchTrailer()
+    {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(mFile)));
+            }
+        });
+    }
+
+    void AnhXaVaKhaiBao()
+    {
+        imageView=findViewById(R.id.movie_img);
+        textView=findViewById(R.id.tvMovie);
+        button=findViewById(R.id.playButton);
+        textViewYeuThich=findViewById(R.id.tvYeuThich);
+        ratingBar=findViewById(R.id.ratingBar);
+        comment=findViewById(R.id.Input_comment);
+        commentLayout=findViewById(R.id.Input_comment_layout);
+
+        idUser=BienToanCuc.getInstance().getLoggedInUserID();
+
+        mId=getIntent().getIntExtra("movieId",0);
+        mName=getIntent().getStringExtra("movieName");
+        mImg=getIntent().getStringExtra("movieImageUrl");
+        mFile=getIntent().getStringExtra("movieFileUrl");
+
+        Glide.with(this).load(mImg).into(imageView);
+
+        cateItemDAO=new CateItemDAO(context);
+        interactionDAO=new InteractionDAO(context);
+        commentDAO=new CommentDAO(context);
+
+
+        iYeuThich=interactionDAO.getYeuThich(idUser, mId);
+        mRating= interactionDAO.getRating(idUser,mId);
+        ratingBar.setRating(mRating);
+        textView.setText(mName);
+
+
+        commentList.clear();
+    }
+
 }
