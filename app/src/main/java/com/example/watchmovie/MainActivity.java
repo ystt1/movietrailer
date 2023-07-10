@@ -174,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()){
-                    case R.id.menu_them:
+                    case R.id.menu_management:
                         changeToAddAct();
                         break;
                     case R.id.menu_thich:

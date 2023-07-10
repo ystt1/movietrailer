@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="Thêm"
-        android:id="@+id/menu_them"
+    <item android:title="Quản lý"
+        android:id="@+id/menu_management"
         />
     <item android:title="Yêu Thích"
         android:id="@+id/menu_thich"

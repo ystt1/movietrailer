@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -111,7 +112,6 @@ public class CategoryRecycler extends RecyclerView.Adapter<CategoryViewHolder> {
 
                         allCates.clear();
                         cateDAO.deleteCate(cate.getCateId());
-
                         allCates=cateDAO.getListCate();
                         refreshData(allCates);
                         dialogInterface.dismiss();
@@ -141,12 +141,30 @@ public class CategoryRecycler extends RecyclerView.Adapter<CategoryViewHolder> {
     {
         TextInputEditText textInputEditText;
         Button confirm;
-
+        TextView textView;
 
         Dialog dialog=new Dialog(context);
         dialog.setContentView(R.layout.add_cate_dialog);
         textInputEditText=dialog.findViewById(R.id.input_cateName);
         confirm=dialog.findViewById(R.id.confirm_add_cate_btn);
+        textView=dialog.findViewById(R.id.addCate_type);
+        textView.setText("Sửa tên thể loại");
+        textInputEditText.setText(cate.getCateTitle());
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title= String.valueOf(textInputEditText.getText());
+                if(title.equals("")==false)
+                {
+                    cate.setCateTitle(title);
+                    allCates.clear();
+                    cateDAO.updateCate(cate);
+                    allCates=cateDAO.getListCate();
+                    dialog.cancel();
+                    refreshData(allCates);
+                }
+            }
+        });
         dialog.show();
     }
 }
