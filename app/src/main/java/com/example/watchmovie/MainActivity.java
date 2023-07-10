@@ -89,10 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-;
-
-
         tabLayout=findViewById(R.id.tab_autoChange);
         cateTab=findViewById(R.id.cateTab);
         appBarLayout=findViewById(R.id.appbar);
@@ -113,32 +109,10 @@ public class MainActivity extends AppCompatActivity {
         setBanner();
         onChangeBannerTab();
         setMainRecyclerView(cateListBelow);
-
-
-
-
-
-
-
-
-
-
-//
-
-//        cateList=new ArrayList<>();
-
-//        cateList.add(new AllCate(2,"xyz",homeCateList));
-//        cateList.add(new AllCate(3,"ijk",homeCateList));
-//        cateList.add(new AllCate(5,"tt",homeCateList));
-//        cateList.add(new AllCate(6,"yasuo",homeCateList));
-
-//        setMainRecyclerView(cateList);
-
-
         cateList1.clear();
         cateDAO=new CateDAO(context);
         cateList1=cateDAO.getListCate();
-        //setMainRecyclerView(cateList1);
+
 
 
         imgMenu.setOnClickListener(new View.OnClickListener() {
@@ -256,15 +230,9 @@ public class MainActivity extends AppCompatActivity {
 
         Intent i = new Intent(context, Favorite.class);
 
-        if(loai==1 && key!="")
-        {
-            i.putExtra("type","1");
+
+            i.putExtra("type",loai);
             i.putExtra("key",key);
-        }
-        else {
-            i.putExtra("type","0");
-            i.putExtra("key",key);
-        }
         context.startActivity(i);
     }
 

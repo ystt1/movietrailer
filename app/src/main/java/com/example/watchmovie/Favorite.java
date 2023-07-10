@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.AnhBiaDAO;
 import com.example.watchmovie.DAO.CateItemDAO;
+import com.example.watchmovie.DAO.InteractionDAO;
 import com.example.watchmovie.adapter.BannerMovieViewPager2Adapter;
 import com.example.watchmovie.adapter.FavoriesRecyclerAdapter;
 import com.example.watchmovie.model.AnhBia;
@@ -25,6 +27,7 @@ import java.util.Timer;
 
 public class Favorite extends AppCompatActivity {
 
+    InteractionDAO interactionDAO;
     RecyclerView recyclerView;
     FavoriesRecyclerAdapter favoriesRecyclerAdapter;
     ImageView imageView;
@@ -33,29 +36,29 @@ public class Favorite extends AppCompatActivity {
     List<CateItem> cateItemList=new ArrayList<>();
     Context context=this;
     TextView textView;
-
+    int idUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite);
-
+        idUser=BienToanCuc.getInstance().getLoggedInUserID();
+        interactionDAO=new InteractionDAO(context);
         textView=findViewById(R.id.tvAct);
         cateItemDAO=new CateItemDAO(context);
         cateItemList.clear();
-        String flag= getIntent().getExtras().getString("key");
-        if(flag.equals(""))
+        int type= getIntent().getIntExtra("type",0);
+        String key= getIntent().getStringExtra("key");
+        if(type==0)
         {
-            cateItemList=cateItemDAO.getListCateItem();
-            setFavoritesRecyclerAdapter(cateItemList);
+            cateItemList=interactionDAO.getListMovieYeuThich(idUser);
         }
         else
         {
             textView.setText("Tìm kiếm");
-            cateItemList=cateItemDAO.getListItemNameLike(flag);
-
-            setFavoritesRecyclerAdapter(cateItemList);
+            cateItemList=cateItemDAO.getListItemNameLike(key);
         }
+        setFavoritesRecyclerAdapter(cateItemList);
         onClickImgBackBtn(); // nhan vao nut quy lai
     }
 

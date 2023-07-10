@@ -6,12 +6,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.example.watchmovie.model.CateItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class InteractionDAO {
+    CateItemDAO cateItemDAO;
     private SQLHelper sqlHelper;
     private SQLiteDatabase database;
-
+    Context context;
     public InteractionDAO(Context context)
     {
+        this.context=context;
         sqlHelper=new SQLHelper(context);
         database=sqlHelper.getWritableDatabase();
     }
@@ -96,4 +104,24 @@ public class InteractionDAO {
             database.update("Interaction", values, "id=?", new String[]{String.valueOf(idCreate)});
         }
     }
+
+    public List<CateItem> getListMovieYeuThich(int userId) {
+        database = sqlHelper.getReadableDatabase();
+        cateItemDAO=new CateItemDAO(context);
+        ArrayList<CateItem> list=new ArrayList<>();
+        list.clear();
+        Cursor cursor = database.rawQuery("SELECT movieId FROM Interaction WHERE userId = " + userId , null);
+        if (cursor.getCount()>0) {
+            cursor.moveToFirst();
+            do{
+                int movieId=cursor.getInt(0);
+                CateItem cateItem=cateItemDAO.getCateItemWithID(movieId);
+                if(cateItem!=null) {
+                    list.add(cateItem);
+                }
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
+
 }
