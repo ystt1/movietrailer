@@ -46,39 +46,20 @@ public class MainActivity extends AppCompatActivity {
     BannerMovieViewPager2Adapter bannerMovieViewPager2Adapter;
     TabLayout tabLayout,cateTab;
     ViewPager bannerMovieViewPager;
-    List<AnhBia> homeAnhBiaList=new ArrayList<>();
-    List<AnhBia> showAnhBiaList;
-    List<AnhBia> tvAnhBiaList;
-    List<AnhBia> childAnhBiaList;
-
-    AnhBiaDAO anhBiaDAO;
-
     MainRecycleAdapter mainRecycleAdapter;
     RecyclerView mainRecyclerView;
-
     NestedScrollView nestedScrollView;
     AppBarLayout appBarLayout;
-
-    List<AllCate> cateList;
     Context context=this;
 
     ImageView imgMenu;
 
     SearchView searchView;
 
-    //cateItem
     List<CateItem> homeCateItemList=new ArrayList<>();
 
     CateItemDAO cateItemDAO;
-
-    //cateList
-
-    List<AllCate> cateList1=new ArrayList<>();
-
     CateDAO cateDAO;
-
-    TabItem tabItem1,tabItem2,tabItem3;
-
     List<AllCate> cateListForBanner=new ArrayList<>();
 
     List<CateItem> bannerListItem=new ArrayList<>();
@@ -89,41 +70,29 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        tabLayout=findViewById(R.id.tab_autoChange);
-        cateTab=findViewById(R.id.cateTab);
-        appBarLayout=findViewById(R.id.appbar);
-        nestedScrollView=findViewById(R.id.nest_scroll);
-        imgMenu=findViewById(R.id.menu_icon);
-        searchView=findViewById(R.id.search_bar);
-        anhBiaDAO=new AnhBiaDAO(context);
-        bannerListItem.clear();
-        homeAnhBiaList.clear();
-        homeAnhBiaList=anhBiaDAO.getListAnhBia();
-        cateItemDAO=new CateItemDAO(context);
-        cateDAO=new CateDAO(context);
-        homeCateItemList.clear();
-        homeCateItemList=cateItemDAO.getListCateItem();
-        cateListForBanner.clear();
-        cateListForBanner=cateDAO.getListCateForBanner();
-        cateListBelow=cateDAO.getListCateBelowBanner();
-        setBanner();
-        onChangeBannerTab();
-        setMainRecyclerView(cateListBelow);
-        cateList1.clear();
-        cateDAO=new CateDAO(context);
-        cateList1=cateDAO.getListCate();
+        if(BienToanCuc.getInstance().getLoggedInUserID()==-1)
+        {
+            Intent i=new Intent(this,LoginAcivity.class);
+            startActivity(i);
+        }else
+        {
+            AnhXaVaKhaiBao();
+            setBanner();
+            onChangeBannerTab();
+            setMainRecyclerView(cateListBelow);
+            onClickShowMenu();
+            onSubmitSearchbar();
+        }
+    }
 
-
-
+    void onClickShowMenu()
+    {
         imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showMenu();
             }
         });
-
-        onSubmitSearchbar();
-
     }
 
     void setBanner()
@@ -145,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
         cateTab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+
                 switch (tab.getPosition()) {
                     case 1:
                         setScrollDefaultView();
@@ -210,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_thich:
                         changeToFavoriteAct(0,"");
                         break;
+                    case R.id.menu_logout:
+                        onClickLogOut();
+                        break;
                     default:
                         break;
                 }
@@ -223,6 +196,13 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent i=new Intent(context,AddActivity.class);
         context.startActivity(i);
+    }
+
+    void onClickLogOut()
+    {
+        BienToanCuc.getInstance().setLoggedInUserID(-1);
+        Intent i=new Intent(this,LoginAcivity.class);
+        startActivity(i);
     }
 
     void changeToFavoriteAct(int loai,String key)
@@ -281,5 +261,25 @@ public class MainActivity extends AppCompatActivity {
         appBarLayout.setExpanded(true);
     }
 
+    void AnhXaVaKhaiBao()
+    {
+        tabLayout=findViewById(R.id.tab_autoChange);
+        cateTab=findViewById(R.id.cateTab);
+        appBarLayout=findViewById(R.id.appbar);
+        nestedScrollView=findViewById(R.id.nest_scroll);
+        imgMenu=findViewById(R.id.menu_icon);
+        searchView=findViewById(R.id.search_bar);
 
+        homeCateItemList.clear();
+        bannerListItem.clear();
+        cateListForBanner.clear();
+
+        cateItemDAO=new CateItemDAO(context);
+        cateDAO=new CateDAO(context);
+        cateDAO=new CateDAO(context);
+
+        homeCateItemList=cateItemDAO.getListCateItem();
+        cateListForBanner=cateDAO.getListCateForBanner();
+        cateListBelow=cateDAO.getListCateBelowBanner();
+    }
 }

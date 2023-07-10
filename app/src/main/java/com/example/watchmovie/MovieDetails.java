@@ -58,13 +58,20 @@ public class MovieDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-        AnhXaVaKhaiBao();
-        onClickWatchTrailer();
-        setTextViewYeuThich();
-        onClickYeuThichBtn();
-        ratingBarChange();
-        CommentRecycler();
-        onCLickComment();
+        if(BienToanCuc.getInstance().getLoggedInUserID()==-1)
+        {
+            Intent i=new Intent(this,LoginAcivity.class);
+            startActivity(i);
+        }else {
+
+            AnhXaVaKhaiBao();
+            onClickWatchTrailer();
+            setTextViewYeuThich();
+            onClickYeuThichBtn();
+            ratingBarChange();
+            CommentRecycler();
+            onCLickComment();
+        }
     }
 
     void ratingBarChange()

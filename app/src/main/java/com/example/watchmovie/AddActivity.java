@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SearchView;
 
+import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.CateDAO;
 import com.example.watchmovie.adapter.CategoryRecycler;
 import com.example.watchmovie.model.AllCate;
@@ -39,17 +41,17 @@ public class AddActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add);
-
-        searchCate=findViewById(R.id.search_cate);
-        showDialogbtn=findViewById(R.id.add_category_button);
-
-        cateList.clear();
-        cateDAO=new CateDAO(context);
-        cateList=cateDAO.getListCate();
-        setAddAdapter(cateList);
-        setOnClickAddCate();
-        setSearch_cateChange();
+        if(BienToanCuc.getInstance().getLoggedInUserID()==-1)
+        {
+            Intent i=new Intent(this,LoginAcivity.class);
+            startActivity(i);
+        }else {
+            setContentView(R.layout.activity_add);
+            AnhXaVaKhaiBao();
+            setAddAdapter(cateList);
+            setOnClickAddCate();
+            setSearch_cateChange();
+        }
 
     }
 
@@ -106,5 +108,14 @@ public class AddActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    void AnhXaVaKhaiBao()
+    {
+        searchCate=findViewById(R.id.search_cate);
+        showDialogbtn=findViewById(R.id.add_category_button);
+        cateList.clear();
+        cateDAO=new CateDAO(context);
+        cateList=cateDAO.getListCate();
     }
 }

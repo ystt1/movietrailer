@@ -25,18 +25,10 @@ public class LoginAcivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_acivity);
         tabLayout=findViewById(R.id.tab_login);
         viewPager=findViewById(R.id.viewPager_login);
-
-
         tabLayout.setupWithViewPager(viewPager);
-
-
         LoginPageAdapter loginPageAdapter=new LoginPageAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         loginPageAdapter.addFragment(new Log_Fragment(),"Đăng nhập");
         loginPageAdapter.addFragment(new Reg_Fragment(),"Đăng kí");
         viewPager.setAdapter(loginPageAdapter);
-
-
-
-
     }
 }

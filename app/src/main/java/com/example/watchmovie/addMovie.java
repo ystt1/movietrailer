@@ -23,6 +23,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.CateItemDAO;
 import com.example.watchmovie.adapter.MovieRecycler;
 import com.example.watchmovie.model.CateItem;
@@ -49,16 +50,15 @@ public class addMovie extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_movie);
-        showDialogbtn=findViewById(R.id.add_movie);
-        movieRecycler=findViewById(R.id.movie_recycler);
-        cateId= getIntent().getIntExtra("categoryId",0);
-        searchMovie=findViewById(R.id.search_movie);
-        cateItemDAO=new CateItemDAO(context);
-        cateItemList.clear();
-
-        cateItemList=cateItemDAO.getListCateItemWithCateId(cateId);
-        setMovieAdapter(cateItemList);
-        setOnClickAddMovie();
+        if(BienToanCuc.getInstance().getLoggedInUserID()==-1)
+        {
+            Intent i=new Intent(this,LoginAcivity.class);
+            startActivity(i);
+        }else {
+            AnhXaVaKhaiBao();
+            setMovieAdapter(cateItemList);
+            setOnClickAddMovie();
+        }
     }
 
     void setMovieAdapter(List<CateItem> cateItemList)
@@ -138,5 +138,15 @@ public class addMovie extends AppCompatActivity {
             }
         });
     }
+    void AnhXaVaKhaiBao()
+    {
+        showDialogbtn=findViewById(R.id.add_movie);
+        movieRecycler=findViewById(R.id.movie_recycler);
+        cateId= getIntent().getIntExtra("categoryId",0);
+        searchMovie=findViewById(R.id.search_movie);
+        cateItemDAO=new CateItemDAO(context);
 
+        cateItemList.clear();
+        cateItemList=cateItemDAO.getListCateItemWithCateId(cateId);
+    }
 }

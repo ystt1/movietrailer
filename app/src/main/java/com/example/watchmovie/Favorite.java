@@ -36,19 +36,27 @@ public class Favorite extends AppCompatActivity {
     List<CateItem> cateItemList=new ArrayList<>();
     Context context=this;
     TextView textView;
-    int idUser;
+    int idUser,type;
+    String key;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_favorite);
-        idUser=BienToanCuc.getInstance().getLoggedInUserID();
-        interactionDAO=new InteractionDAO(context);
-        textView=findViewById(R.id.tvAct);
-        cateItemDAO=new CateItemDAO(context);
-        cateItemList.clear();
-        int type= getIntent().getIntExtra("type",0);
-        String key= getIntent().getStringExtra("key");
+        if(BienToanCuc.getInstance().getLoggedInUserID()==-1)
+        {
+            Intent i=new Intent(this,LoginAcivity.class);
+            startActivity(i);
+        }else {
+            setContentView(R.layout.activity_favorite);
+            AnhXaVaKhaiBao();
+            getcateItemList();
+            setFavoritesRecyclerAdapter(cateItemList);
+            onClickImgBackBtn();
+        }
+    }
+
+    void getcateItemList()
+    {
         if(type==0)
         {
             cateItemList=interactionDAO.getListMovieYeuThich(idUser);
@@ -58,8 +66,6 @@ public class Favorite extends AppCompatActivity {
             textView.setText("Tìm kiếm");
             cateItemList=cateItemDAO.getListItemNameLike(key);
         }
-        setFavoritesRecyclerAdapter(cateItemList);
-        onClickImgBackBtn(); // nhan vao nut quy lai
     }
 
     void onClickImgBackBtn()
@@ -81,5 +87,20 @@ public class Favorite extends AppCompatActivity {
         favoriesRecyclerAdapter=new FavoriesRecyclerAdapter(this,cateItemList);
         recyclerView.setAdapter(favoriesRecyclerAdapter);
 
+    }
+
+    void AnhXaVaKhaiBao()
+    {
+
+
+        textView=findViewById(R.id.tvAct);
+        cateItemDAO=new CateItemDAO(context);
+        interactionDAO=new InteractionDAO(context);
+        cateItemList.clear();
+
+        type= getIntent().getIntExtra("type",0);
+        key= getIntent().getStringExtra("key");
+
+        idUser=BienToanCuc.getInstance().getLoggedInUserID();
     }
 }

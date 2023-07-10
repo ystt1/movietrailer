@@ -6,4 +6,7 @@
     <item android:title="Yêu Thích"
         android:id="@+id/menu_thich"
         />
+    <item android:title="Đăng xuất"
+        android:id="@+id/menu_logout"
+        />
 </menu>
