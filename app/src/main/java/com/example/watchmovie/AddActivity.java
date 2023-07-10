@@ -8,8 +8,11 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.SearchView;
 
 import com.example.watchmovie.BienToanCuc.BienToanCuc;
@@ -36,6 +39,8 @@ public class AddActivity extends AppCompatActivity {
     Button showDialogbtn,addCate;
 
     TextInputEditText textInputEditText;
+
+    ImageView menu;
 
 
     @Override
@@ -83,7 +88,9 @@ public class AddActivity extends AppCompatActivity {
                         if(name.equals("")){}
                         else{
                             cateDAO.addCateWithNameOnly(name);
+                            cateList=cateDAO.getListCate();
                             setAddAdapter(cateList);
+                            dialog.cancel();
                         }
                     }
                 });

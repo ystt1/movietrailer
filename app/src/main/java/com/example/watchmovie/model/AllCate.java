@@ -10,9 +10,6 @@ public class AllCate {
     private List<CateItem> cateItemList=null;
 
 
-    public List<CateItem> getCateItemList() {
-        return cateItemList;
-    }
 
 
     public AllCate( Integer cateId,String cateTitle) {

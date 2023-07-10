@@ -33,7 +33,7 @@ public class CateDAO {
 
     public long deleteCate(int id)
     {
-        long check=database.delete("Category","id= ?",
+        long check=database.delete("Category","cateID= ?",
                 new String[]{String.valueOf(id)});
         return check;
 
@@ -44,7 +44,7 @@ public class CateDAO {
         ContentValues values=new ContentValues();
         values.put("cateId",cate.getCateId());
         values.put("cateTitle",cate.getCateTitle());
-        long check=database.update("Category",values,"id=?",
+        long check=database.update("Category",values,"cateID=?",
                 new String[]{String.valueOf(cate.getCateId())});
         return check;
     }
@@ -53,7 +53,6 @@ public class CateDAO {
     {
         ArrayList<AllCate> list=new ArrayList<>();
         database=sqlHelper.getReadableDatabase();
-
         Cursor cursor=database.rawQuery("Select * from Category",null);
         if(cursor.getCount()>0)
         {
@@ -65,7 +64,6 @@ public class CateDAO {
                 ));
             }while (cursor.moveToNext());
         }
-
         return list;
     }
 
@@ -73,7 +71,7 @@ public class CateDAO {
     {
         int id= getMaxId();
         ContentValues values=new ContentValues();
-        values.put("cateID",id);
+        values.put("cateID",id+1);
         values.put("cateTitle",name);
         long check=database.insert("Category",null,values);
     }
