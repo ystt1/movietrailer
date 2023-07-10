@@ -14,14 +14,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.CateItemDAO;
+import com.example.watchmovie.DAO.CommentDAO;
 import com.example.watchmovie.DAO.InteractionDAO;
 import com.example.watchmovie.adapter.CommentRecyclerAdapter;
 import com.example.watchmovie.adapter.MainRecycleAdapter;
 import com.example.watchmovie.model.Comment;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +47,11 @@ public class MovieDetails extends AppCompatActivity {
     RatingBar ratingBar;
     int mRating;
 
+    TextInputEditText comment;
+
+    TextInputLayout commentLayout;
+
+    CommentDAO commentDAO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +61,11 @@ public class MovieDetails extends AppCompatActivity {
         button=findViewById(R.id.playButton);
         textViewYeuThich=findViewById(R.id.tvYeuThich);
         ratingBar=findViewById(R.id.ratingBar);
+        comment=findViewById(R.id.Input_comment);
+        commentLayout=findViewById(R.id.Input_comment_layout);
+
+
+
 
         idUser=BienToanCuc.getInstance().getLoggedInUserID();
         mId=getIntent().getIntExtra("movieId",0);
@@ -63,7 +77,7 @@ public class MovieDetails extends AppCompatActivity {
         textView.setText(mName);
         cateItemDAO=new CateItemDAO(context);
         interactionDAO=new InteractionDAO(context);
-
+        commentDAO=new CommentDAO(context);
 
 
         iYeuThich=interactionDAO.getYeuThich(idUser, mId);
@@ -81,6 +95,7 @@ public class MovieDetails extends AppCompatActivity {
         onClickYeuThichBtn();
         ratingBarChange();
         CommentRecycler();
+        onCLickComment();
     }
 
     void ratingBarChange()
@@ -128,8 +143,6 @@ public class MovieDetails extends AppCompatActivity {
         commentList.add(new Comment("Phan Quoc Tuan 4","phim hay tuyet zoi 4"));
         commentList.add(new Comment("Phan Quoc Tuan5 ","phim hay tuyet zoi 5"));
 
-        Log.e("TAG", String.valueOf(commentList.size()));
-
         RecyclerView recyclerView=findViewById(R.id.recycler_comment);
         CommentRecyclerAdapter commentRecyclerAdapter;
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
@@ -138,4 +151,20 @@ public class MovieDetails extends AppCompatActivity {
         recyclerView.setAdapter(commentRecyclerAdapter);
     }
 
+
+
+    void onCLickComment()
+    {
+        commentLayout.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String text= String.valueOf(comment.getText());
+                if(text.equals("")==false)
+                {
+                    commentDAO.addComment(idUser,mId,text);
+                    comment.setText("");
+                }
+            }
+        });
+    }
 }
