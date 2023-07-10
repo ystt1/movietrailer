@@ -1,6 +1,8 @@
 package com.example.watchmovie;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +19,12 @@ import com.bumptech.glide.Glide;
 import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.CateItemDAO;
 import com.example.watchmovie.DAO.InteractionDAO;
+import com.example.watchmovie.adapter.CommentRecyclerAdapter;
+import com.example.watchmovie.adapter.MainRecycleAdapter;
+import com.example.watchmovie.model.Comment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieDetails extends AppCompatActivity {
 
@@ -72,6 +80,7 @@ public class MovieDetails extends AppCompatActivity {
         setTextViewYeuThich();
         onClickYeuThichBtn();
         ratingBarChange();
+        CommentRecycler();
     }
 
     void ratingBarChange()
@@ -107,4 +116,26 @@ public class MovieDetails extends AppCompatActivity {
             }
         });
     }
+
+
+    void CommentRecycler()
+    {
+        List<Comment> commentList=new ArrayList<>();
+
+        commentList.add(new Comment("Phan Quoc Tuan","phim hay tuyet zoi"));
+        commentList.add(new Comment("Phan Quoc Tuan 2","phim hay tuyet zoi 2"));
+        commentList.add(new Comment("Phan Quoc Tuan 3","phim hay tuyet zoi 3"));
+        commentList.add(new Comment("Phan Quoc Tuan 4","phim hay tuyet zoi 4"));
+        commentList.add(new Comment("Phan Quoc Tuan5 ","phim hay tuyet zoi 5"));
+
+        Log.e("TAG", String.valueOf(commentList.size()));
+
+        RecyclerView recyclerView=findViewById(R.id.recycler_comment);
+        CommentRecyclerAdapter commentRecyclerAdapter;
+        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        commentRecyclerAdapter=new CommentRecyclerAdapter(this,commentList);
+        recyclerView.setAdapter(commentRecyclerAdapter);
+    }
+
 }

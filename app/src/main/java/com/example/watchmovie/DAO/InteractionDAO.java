@@ -110,7 +110,7 @@ public class InteractionDAO {
         cateItemDAO=new CateItemDAO(context);
         ArrayList<CateItem> list=new ArrayList<>();
         list.clear();
-        Cursor cursor = database.rawQuery("SELECT movieId FROM Interaction WHERE userId = " + userId , null);
+        Cursor cursor = database.rawQuery("SELECT movieId FROM Interaction WHERE userId = " + userId +" AND yeuThich=1" , null);
         if (cursor.getCount()>0) {
             cursor.moveToFirst();
             do{
