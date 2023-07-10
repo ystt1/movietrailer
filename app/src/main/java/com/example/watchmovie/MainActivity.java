@@ -22,6 +22,7 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toolbar;
 
+import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.AnhBiaDAO;
 import com.example.watchmovie.DAO.CateDAO;
 import com.example.watchmovie.DAO.CateItemDAO;
@@ -98,9 +99,8 @@ public class MainActivity extends AppCompatActivity {
         nestedScrollView=findViewById(R.id.nest_scroll);
         imgMenu=findViewById(R.id.menu_icon);
         searchView=findViewById(R.id.search_bar);
-
         anhBiaDAO=new AnhBiaDAO(context);
-    bannerListItem.clear();
+        bannerListItem.clear();
         homeAnhBiaList.clear();
         homeAnhBiaList=anhBiaDAO.getListAnhBia();
         cateItemDAO=new CateItemDAO(context);

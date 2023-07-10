@@ -60,7 +60,7 @@ public class BannerMovieViewPager2Adapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(context, MovieDetails.class);
-                i.putExtra("movieId",String.valueOf(cateItemList.get(position).getId()));
+                i.putExtra("movieId",cateItemList.get(position).getId());
                 i.putExtra("movieName",cateItemList.get(position).getMovieName());
                 i.putExtra("movieImageUrl",cateItemList.get(position).getImgUrl());
                 i.putExtra("movieFileUrl",cateItemList.get(position).getFileurl());

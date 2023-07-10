@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.UserDAO;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -49,7 +50,7 @@ public class Log_Fragment extends Fragment {
                     if(id!=-1)
                     {
                         Intent i=new Intent(requireContext(), MainActivity.class);
-                        i.putExtra("id",id);
+                        BienToanCuc.getInstance().setLoggedInUserID(id);
                         startActivity(i);
                     }
                     else {

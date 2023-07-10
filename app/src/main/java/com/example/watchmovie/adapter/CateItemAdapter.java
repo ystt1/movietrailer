@@ -45,7 +45,7 @@ public class CateItemAdapter extends RecyclerView.Adapter<CateItemAdapter.ItemVi
             @Override
             public void onClick(View view) {
                 Intent i=new Intent(context, MovieDetails.class);
-                i.putExtra("movieId",String.valueOf(cateItemList.get(flag).getId()));
+                i.putExtra("movieId",cateItemList.get(flag).getId());
                 i.putExtra("movieName",cateItemList.get(flag).getMovieName());
                 i.putExtra("movieImageUrl",cateItemList.get(flag).getImgUrl());
                 i.putExtra("movieFileUrl",cateItemList.get(flag).getFileurl());
