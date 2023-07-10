@@ -3,6 +3,7 @@ package com.example.watchmovie;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,7 @@ import java.util.List;
 
 public class MovieDetails extends AppCompatActivity {
 
+    SwipeRefreshLayout swipeRefreshLayout;
     int idUser;
     InteractionDAO interactionDAO;
     ImageView imageView;
@@ -71,6 +73,7 @@ public class MovieDetails extends AppCompatActivity {
             ratingBarChange();
             CommentRecycler();
             onCLickComment();
+            onSwipe();
         }
     }
 
@@ -81,6 +84,23 @@ public class MovieDetails extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 mRating= (int) v;
                 interactionDAO.setRating(idUser,mId,mRating);
+            }
+        });
+    }
+
+    void onSwipe()
+    {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(MovieDetails.this, MovieDetails.class);
+                intent.putExtra("movieId",mId);
+                intent.putExtra("movieName",mName);
+                intent.putExtra("movieImageUrl",mImg);
+                intent.putExtra("movieFileUrl",mFile);
+                startActivity(intent);
+                finish();
+                swipeRefreshLayout.setRefreshing(false);
             }
         });
     }
@@ -152,6 +172,7 @@ public class MovieDetails extends AppCompatActivity {
 
     void AnhXaVaKhaiBao()
     {
+        swipeRefreshLayout=findViewById(R.id.Detail_Swipe);
         imageView=findViewById(R.id.movie_img);
         textView=findViewById(R.id.tvMovie);
         button=findViewById(R.id.playButton);

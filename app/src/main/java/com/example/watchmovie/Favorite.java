@@ -3,6 +3,7 @@ package com.example.watchmovie;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +33,7 @@ public class Favorite extends AppCompatActivity {
     FavoriesRecyclerAdapter favoriesRecyclerAdapter;
     ImageView imageView;
 
+    SwipeRefreshLayout swipeRefreshLayout;
     CateItemDAO cateItemDAO;
     List<CateItem> cateItemList=new ArrayList<>();
     Context context=this;
@@ -52,7 +54,23 @@ public class Favorite extends AppCompatActivity {
             getcateItemList();
             setFavoritesRecyclerAdapter(cateItemList);
             onClickImgBackBtn();
+            onSwipe();
         }
+    }
+
+    void onSwipe()
+    {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(Favorite.this, Favorite.class);
+                intent.putExtra("type",type);
+                intent.putExtra("key",key);
+                startActivity(intent);
+                finish();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     void getcateItemList()
@@ -92,7 +110,7 @@ public class Favorite extends AppCompatActivity {
     void AnhXaVaKhaiBao()
     {
 
-
+        swipeRefreshLayout=findViewById(R.id.Favorite_Swipe);
         textView=findViewById(R.id.tvAct);
         cateItemDAO=new CateItemDAO(context);
         interactionDAO=new InteractionDAO(context);

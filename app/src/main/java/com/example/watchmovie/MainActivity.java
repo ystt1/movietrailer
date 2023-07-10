@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -46,6 +47,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
+    SwipeRefreshLayout swipeRefreshLayout;
     User user;
     UserDAO userDAO;
     BannerMovieViewPager2Adapter bannerMovieViewPager2Adapter;
@@ -95,8 +97,21 @@ public class MainActivity extends AppCompatActivity {
                 setMainRecyclerView(cateListBelow);
                 onClickShowMenu();
                 onSubmitSearchbar();
+                onSwipe();
             }
         }
+    }
+    void onSwipe()
+    {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     void onClickShowMenu()
@@ -311,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
         nestedScrollView=findViewById(R.id.nest_scroll);
         imgMenu=findViewById(R.id.menu_icon);
         searchView=findViewById(R.id.search_bar);
+        swipeRefreshLayout=findViewById(R.id.Main_Swipe);
 
         homeCateItemList.clear();
         bannerListItem.clear();

@@ -177,6 +177,7 @@ public class MovieRecycler extends  RecyclerView.Adapter<MovieViewHolder>{
                                     CateItem newItem=new CateItem(cateItem.getId(),String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),idCate);
                                     cateItemDAO.updateCateItem(newItem);
                                     newCateItem=cateItemDAO.getListCateItemWithCateId(idCate);
+                                    dialog.cancel();
                                     refreshData(newCateItem);
 
                                 } else {
