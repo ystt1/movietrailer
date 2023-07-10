@@ -88,6 +88,7 @@ public class AddActivity extends AppCompatActivity {
                         if(name.equals("")){}
                         else{
                             cateDAO.addCateWithNameOnly(name);
+                            cateList.clear();
                             cateList=cateDAO.getListCate();
                             setAddAdapter(cateList);
                             dialog.cancel();

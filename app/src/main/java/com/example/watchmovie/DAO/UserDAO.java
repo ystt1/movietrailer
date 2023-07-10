@@ -120,13 +120,31 @@ public class UserDAO {
     {
         database=sqlHelper.getReadableDatabase();
         String name="";
-        Cursor cursor=database.rawQuery("SELECT userName FROM User WHERE id="+id,null);
+        Cursor cursor=database.rawQuery("SELECT displayName FROM User WHERE id="+id,null);
         if(cursor.getCount()>0)
         {
             cursor.moveToFirst();
             name=cursor.getString(0);
         }
         return name;
+    }
+
+    public User getUserWithId(int id)
+    {
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("Select * from User where id="+id,null);
+        if(cursor.getCount()>0)
+        {
+            cursor.moveToFirst();
+            return new User(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getInt(5) != 0
+                );
+        }
+        return null;
     }
 
 }

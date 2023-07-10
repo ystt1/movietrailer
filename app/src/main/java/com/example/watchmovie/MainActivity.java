@@ -26,11 +26,13 @@ import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.AnhBiaDAO;
 import com.example.watchmovie.DAO.CateDAO;
 import com.example.watchmovie.DAO.CateItemDAO;
+import com.example.watchmovie.DAO.UserDAO;
 import com.example.watchmovie.adapter.BannerMovieViewPager2Adapter;
 import com.example.watchmovie.adapter.MainRecycleAdapter;
 import com.example.watchmovie.model.AllCate;
 import com.example.watchmovie.model.AnhBia;
 import com.example.watchmovie.model.CateItem;
+import com.example.watchmovie.model.User;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -43,6 +45,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
+
+    User user;
+    UserDAO userDAO;
     BannerMovieViewPager2Adapter bannerMovieViewPager2Adapter;
     TabLayout tabLayout,cateTab;
     ViewPager bannerMovieViewPager;
@@ -65,23 +70,32 @@ public class MainActivity extends AppCompatActivity {
     List<CateItem> bannerListItem=new ArrayList<>();
     List<AllCate> cateListBelow;
 
+    int idUser=BienToanCuc.getInstance().getLoggedInUserID();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(BienToanCuc.getInstance().getLoggedInUserID()==-1)
+        if(idUser==-1)
         {
             Intent i=new Intent(this,LoginAcivity.class);
             startActivity(i);
         }else
         {
             AnhXaVaKhaiBao();
-            setBanner();
-            onChangeBannerTab();
-            setMainRecyclerView(cateListBelow);
-            onClickShowMenu();
-            onSubmitSearchbar();
+            if(user==null)
+            {
+                Intent i=new Intent(this,LoginAcivity.class);
+                startActivity(i);
+            }
+            else {
+                setBanner();
+                onChangeBannerTab();
+                setMainRecyclerView(cateListBelow);
+                onClickShowMenu();
+                onSubmitSearchbar();
+            }
         }
     }
 
@@ -90,7 +104,12 @@ public class MainActivity extends AppCompatActivity {
         imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMenu();
+                if(user.isAdmin()) {
+                    showMenu();
+                }
+                else {
+                    showMenuCustomer();
+                }
             }
         });
     }
@@ -192,6 +211,29 @@ public class MainActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+    void showMenuCustomer()
+    {
+        PopupMenu popupMenu=new PopupMenu(this,imgMenu);
+        popupMenu.getMenuInflater().inflate(R.menu.menu_popup_customer,popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.menu_thich:
+                        changeToFavoriteAct(0,"");
+                        break;
+                    case R.id.menu_logout:
+                        onClickLogOut();
+                        break;
+                    default:
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
     void changeToAddAct()
     {
         Intent i=new Intent(context,AddActivity.class);
@@ -276,10 +318,12 @@ public class MainActivity extends AppCompatActivity {
 
         cateItemDAO=new CateItemDAO(context);
         cateDAO=new CateDAO(context);
-        cateDAO=new CateDAO(context);
+        userDAO=new UserDAO(context);
 
         homeCateItemList=cateItemDAO.getListCateItem();
         cateListForBanner=cateDAO.getListCateForBanner();
         cateListBelow=cateDAO.getListCateBelowBanner();
+        user=userDAO.getUserWithId(idUser);
+
     }
 }

@@ -150,6 +150,7 @@ public class CategoryRecycler extends RecyclerView.Adapter<CategoryViewHolder> {
         textView=dialog.findViewById(R.id.addCate_type);
         textView.setText("Sửa tên thể loại");
         textInputEditText.setText(cate.getCateTitle());
+        confirm.setText("Đồng ý");
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

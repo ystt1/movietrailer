@@ -66,7 +66,7 @@ public class addMovie extends AppCompatActivity {
 
         RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
         movieRecycler.setLayoutManager(layoutManager);
-        movieAdapter=new MovieRecycler(this,cateItemList);
+        movieAdapter=new MovieRecycler(this,cateItemList,cateId);
         movieRecycler.setAdapter(movieAdapter);
         setSearchMovieChange();
     }
@@ -105,9 +105,10 @@ public class addMovie extends AppCompatActivity {
 
                                             CateItem cateItem=new CateItem(id+1,String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),cateId);
                                             cateItemDAO.addCateItem(cateItem);
-                                            Intent i=new Intent(context,AddActivity.class);
-                                            i.putExtra("categoryId",cateId);
-                                            context.startActivity(i);
+                                            cateItemList.clear();
+                                            cateItemList=cateItemDAO.getListCateItemWithCateId(cateId);
+                                            setMovieAdapter(cateItemList);
+                                            dialog.cancel();
                                         } else {
                                             Toast.makeText(context, "Có gì đó không hợp lệ", Toast.LENGTH_SHORT).show();
                                         }
