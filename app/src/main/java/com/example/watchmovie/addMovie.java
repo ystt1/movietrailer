@@ -103,7 +103,7 @@ public class addMovie extends AppCompatActivity {
                                         Log.e("tag", String.valueOf(id));
                                         if (URLUtil.isValidUrl(String.valueOf(trailerInput.getText())) && id!=-1) {
 
-                                            CateItem cateItem=new CateItem(id+1,String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),cateId,0);
+                                            CateItem cateItem=new CateItem(id+1,String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),cateId);
                                             cateItemDAO.addCateItem(cateItem);
                                             Intent i=new Intent(context,AddActivity.class);
                                             i.putExtra("categoryId",cateId);

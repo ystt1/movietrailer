@@ -46,7 +46,7 @@ public class Favorite extends AppCompatActivity {
         String flag= getIntent().getExtras().getString("key");
         if(flag.equals(""))
         {
-            cateItemList=cateItemDAO.getListItemYeuThich();
+            cateItemList=cateItemDAO.getListCateItem();
             setFavoritesRecyclerAdapter(cateItemList);
         }
         else

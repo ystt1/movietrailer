@@ -6,12 +6,12 @@ public class User {
     int id;
     String userName;
     String passWord;
-    Bitmap avatar;
+    String avatar;
     String displayName;
     boolean isAdmin;
 
 
-    public User(int id, String userName, String passWord, Bitmap avatar, String displayName, boolean isAdmin) {
+    public User(int id, String userName, String passWord, String avatar, String displayName, boolean isAdmin) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
@@ -45,11 +45,11 @@ public class User {
         this.passWord = passWord;
     }
 
-    public Bitmap getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(Bitmap avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 

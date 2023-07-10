@@ -6,16 +6,15 @@ public class CateItem {
     String imgUrl;
     String fileurl;
     Integer idCate;
-    Integer yeuThich;
 
 
-    public CateItem(Integer id, String movieName, String imgUrl, String fileurl, Integer idCate, Integer yeuThich) {
+
+    public CateItem(Integer id, String movieName, String imgUrl, String fileurl, Integer idCate) {
         this.id = id;
         this.movieName = movieName;
         this.imgUrl = imgUrl;
         this.fileurl = fileurl;
         this.idCate = idCate;
-        this.yeuThich = yeuThich;
     }
 
     public Integer getIdCate() {
@@ -25,16 +24,6 @@ public class CateItem {
     public void setIdCate(Integer idCate) {
         this.idCate = idCate;
     }
-
-
-    public Integer getYeuThich() {
-        return yeuThich;
-    }
-
-    public void setYeuThich(Integer yeuThich) {
-        this.yeuThich = yeuThich;
-    }
-
 
     public Integer getId() {
         return id;

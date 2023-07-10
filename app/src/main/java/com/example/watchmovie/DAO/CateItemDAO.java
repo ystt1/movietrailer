@@ -30,7 +30,6 @@ public class CateItemDAO {
         values.put("imgUrl",cateItem.getImgUrl());
         values.put("fileurl",cateItem.getFileurl());
         values.put("idCate",cateItem.getIdCate());
-        values.put("yeuThich",cateItem.getYeuThich());
         long check=database.insert("CateItem",null,values);
         return check;
     }
@@ -51,7 +50,6 @@ public class CateItemDAO {
         values.put("imgUrl",cateItem.getImgUrl());
         values.put("fileurl",cateItem.getFileurl());
         values.put("idCate",cateItem.getIdCate());
-        values.put("yeuThich",cateItem.getYeuThich());
         long check=database.update("CateItem",values,"id=?",
                 new String[]{String.valueOf(cateItem.getId())});
         return check;
@@ -72,8 +70,7 @@ public class CateItemDAO {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getInt(5)
+                        cursor.getInt(4)
                 ));
             }while (cursor.moveToNext());
         }
@@ -96,8 +93,7 @@ public class CateItemDAO {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getInt(5)
+                        cursor.getInt(4)
                 ));
             }while (cursor.moveToNext());
         }
@@ -105,18 +101,6 @@ public class CateItemDAO {
     }
 
 
-    public int getYeuThich(int id)
-    {
-        database=sqlHelper.getReadableDatabase();
-
-        Cursor cursor=database.rawQuery("SELECT yeuThich from CateItem WHERE id ="+id+"",null);
-        if(cursor.getCount()>0)
-        {
-            cursor.moveToFirst();
-            return cursor.getInt(0);
-        }
-        return -1;
-    }
 
     public  CateItem getCateItemWithID(int id)
     {
@@ -131,28 +115,10 @@ public class CateItemDAO {
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getInt(4),
-                    cursor.getInt(5));
+                    cursor.getInt(4));
             return cateItem;
        }
         return null;
-    }
-
-    public long setyeuThich(int id,int yeuThich)
-    {
-        database=sqlHelper.getWritableDatabase();
-        CateItem cateItem= getCateItemWithID(id);
-        ContentValues values=new ContentValues();
-        values.put("id",cateItem.getId());
-        values.put("movieName",cateItem.getMovieName());
-        values.put("imgUrl",cateItem.getImgUrl());
-        values.put("fileurl",cateItem.getFileurl());
-        values.put("idCate",cateItem.getIdCate());
-        values.put("yeuThich",yeuThich);
-        long check=0;
-        check=database.update("CateItem",values,"id=?",
-                new String[]{String.valueOf(cateItem.getId())});
-        return check;
     }
 
     public ArrayList<CateItem> getListCateItemWithCateId(int id)
@@ -169,8 +135,7 @@ public class CateItemDAO {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getInt(5)
+                        cursor.getInt(4)
                 ));
             }while (cursor.moveToNext());
         }
@@ -188,29 +153,5 @@ public class CateItemDAO {
         }
         return -1;
     }
-
-    public ArrayList<CateItem> getListItemYeuThich()
-    {
-        ArrayList<CateItem> list=new ArrayList<>();
-        database=sqlHelper.getReadableDatabase();
-        Cursor cursor=database.rawQuery("SELECT * from CateItem WHERE yeuThich=1",null);
-        if(cursor.getCount()>0)
-        {
-
-            cursor.moveToFirst();
-            do{
-                list.add(new CateItem(cursor.getInt(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getInt(4),
-                        cursor.getInt(5)
-                ));
-            }while (cursor.moveToNext());
-        }
-        return list;
-    }
-
-
 
 }
