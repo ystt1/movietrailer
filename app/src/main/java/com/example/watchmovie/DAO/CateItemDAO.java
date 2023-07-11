@@ -188,4 +188,76 @@ public class CateItemDAO {
         }
         return -1;
     }
+
+    public ArrayList<CateItem> getListCateItemBestRating()
+    {
+        ArrayList<CateItem> list=new ArrayList<>();
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("SELECT * from CateItem ORDER BY rating DESC LIMIT 5",null);
+        if(cursor.getCount()>0)
+        {
+
+            cursor.moveToFirst();
+            do{
+                list.add(new CateItem(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
+
+                ));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public ArrayList<CateItem> getListCateItemHotest()
+    {
+        ArrayList<CateItem> list=new ArrayList<>();
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("SELECT * from CateItem ORDER BY luotThich DESC LIMIT 5",null);
+        if(cursor.getCount()>0)
+        {
+
+            cursor.moveToFirst();
+            do{
+                list.add(new CateItem(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
+
+                ));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public ArrayList<CateItem> getListCateItemNewest()
+    {
+        ArrayList<CateItem> list=new ArrayList<>();
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("SELECT * from CateItem ORDER BY id DESC LIMIT 5",null);
+        if(cursor.getCount()>0)
+        {
+
+            cursor.moveToFirst();
+            do{
+                list.add(new CateItem(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
+
+                ));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
 }

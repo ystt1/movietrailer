@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.view.View;
 
+import com.example.watchmovie.R;
 import com.example.watchmovie.model.CateItem;
 
 import java.util.ArrayList;
@@ -134,11 +136,11 @@ public class InteractionDAO {
         if (quantity>0) {
             cursor.moveToFirst();
             do{
-                quantity+=1;
                 totalRating=totalRating+cursor.getInt(0);
             }while (cursor.moveToNext());
             return (float)totalRating/quantity;
         }
         return 0;
     }
+
 }

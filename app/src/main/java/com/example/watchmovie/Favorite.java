@@ -23,6 +23,7 @@ import com.example.watchmovie.model.AnhBia;
 import com.example.watchmovie.model.CateItem;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Timer;
 
@@ -31,14 +32,13 @@ public class Favorite extends AppCompatActivity {
     InteractionDAO interactionDAO;
     RecyclerView recyclerView;
     FavoriesRecyclerAdapter favoriesRecyclerAdapter;
-    ImageView imageView;
-
+    ImageView imageView,iconSortRating,iconSortLuotThich,iconSortTime;
     SwipeRefreshLayout swipeRefreshLayout;
     CateItemDAO cateItemDAO;
     List<CateItem> cateItemList=new ArrayList<>();
     Context context=this;
-    TextView textView;
-    int idUser,type;
+    TextView textView,tvSortRating,tvSortLuotThich,tvSortTime;
+    int idUser,type,sortRating=-1,sortLuotThich=-2,sortTime=-3;
     String key;
 
     @Override
@@ -51,11 +51,81 @@ public class Favorite extends AppCompatActivity {
         }else {
             setContentView(R.layout.activity_favorite);
             AnhXaVaKhaiBao();
+            setSort(0);
             getcateItemList();
             setFavoritesRecyclerAdapter(cateItemList);
             onClickImgBackBtn();
             onSwipe();
+
+            setOnClickSort();
         }
+    }
+
+    void setOnClickSort()
+    {
+        tvSortRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortRating=-sortRating;
+                setSort(sortRating);
+            }
+        });
+        tvSortLuotThich.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortLuotThich=-sortLuotThich;
+                setSort(sortLuotThich);
+            }
+        });
+        tvSortTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sortTime=-sortTime;
+                setSort(sortTime);
+            }
+        });
+    }
+
+    void setSort(int sort)
+    {
+        iconSortRating.setVisibility(View.INVISIBLE);
+        iconSortLuotThich.setVisibility(View.INVISIBLE);
+        iconSortTime.setVisibility(View.INVISIBLE);
+        switch (sort) {
+            case 3:
+                Collections.sort(cateItemList, new CateItem.idNhoDenLon());
+                iconSortTime.setImageResource(R.drawable.arrow_down_icon);
+                iconSortTime.setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                Collections.sort(cateItemList, new CateItem.luotThichLonDenNho());
+                iconSortLuotThich.setImageResource(R.drawable.arrow_down_icon);
+                iconSortLuotThich.setVisibility(View.VISIBLE);
+                break;
+            case 1:
+                Collections.sort(cateItemList, new CateItem.ratingLonDenNho());
+                iconSortRating.setImageResource(R.drawable.arrow_down_icon);
+                iconSortRating.setVisibility(View.VISIBLE);
+                break;
+            case -1:
+                Collections.sort(cateItemList, new CateItem.ratingNhoDenLon());
+                iconSortRating.setImageResource(R.drawable.arrow_up_icon);
+                iconSortRating.setVisibility(View.VISIBLE);
+                break;
+            case -2:
+                Collections.sort(cateItemList, new CateItem.luotThichNhoDenLon());
+                iconSortLuotThich.setImageResource(R.drawable.arrow_up_icon);
+                iconSortLuotThich.setVisibility(View.VISIBLE);
+                break;
+            case -3:
+                Collections.sort(cateItemList, new CateItem.idLonDenNho());
+                iconSortTime.setImageResource(R.drawable.arrow_up_icon);
+                iconSortTime.setVisibility(View.VISIBLE);
+                break;
+            default:
+                break;
+        }
+        setFavoritesRecyclerAdapter(cateItemList);
     }
 
     void onSwipe()
@@ -112,8 +182,16 @@ public class Favorite extends AppCompatActivity {
 
         swipeRefreshLayout=findViewById(R.id.Favorite_Swipe);
         textView=findViewById(R.id.tvAct);
+        tvSortRating=findViewById(R.id.tv_sortRating);
+        tvSortLuotThich=findViewById(R.id.tv_sortLuotThich);
+        tvSortTime=findViewById(R.id.tv_sortTime);
+        iconSortRating=findViewById(R.id.icon_sortRating);
+        iconSortLuotThich=findViewById(R.id.icon_sortLuotThich);
+        iconSortTime=findViewById(R.id.icon_sortTime);
+
         cateItemDAO=new CateItemDAO(context);
         interactionDAO=new InteractionDAO(context);
+
         cateItemList.clear();
 
         type= getIntent().getIntExtra("type",0);

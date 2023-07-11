@@ -57,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
     CateItemDAO cateItemDAO;
     CateDAO cateDAO;
     List<AllCate> cateListForBanner=new ArrayList<>();
+    List<CateItem> bestRatingList=new ArrayList<>();
+    List<CateItem> bestLoveList=new ArrayList<>();
+    List<CateItem> newestList=new ArrayList<>();
 
     List<CateItem> bannerListItem=new ArrayList<>();
     List<AllCate> cateListBelow;
@@ -68,11 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        int a=10;
-//        int b=3;
-//        float test=(float) a/b;
-//
-//        Log.e("test", String.valueOf(test));
 
 
         if(idUser==-1)
@@ -127,17 +125,13 @@ public class MainActivity extends AppCompatActivity {
 
     void setBanner()
     {
-       for(int i=0; i < cateListForBanner.size(); i++) {
-           cateTab.getTabAt(i).setText(cateListForBanner.get(i).getCateTitle());
-       }
-       changeBannerList(cateListForBanner.get(0).getCateId());
+        cateTab.getTabAt(0).setText("Best Rating");
+        cateTab.getTabAt(1).setText("Hotest");
+        cateTab.getTabAt(2).setText("Newest");
+        homeCateItemList=bestRatingList;
+        setBannerMovieViewPager2Adapter(homeCateItemList);
     }
 
-    void changeBannerList(int id)
-    {
-        bannerListItem=cateItemDAO.getListCateItemWithCateId(id);
-        setBannerMovieViewPager2Adapter(bannerListItem);
-    }
 
     void onChangeBannerTab()
     {
@@ -148,18 +142,18 @@ public class MainActivity extends AppCompatActivity {
                 switch (tab.getPosition()) {
                     case 1:
                         setScrollDefaultView();
-                        changeBannerList(cateListForBanner.get(1).getCateId());
-                        setBannerMovieViewPager2Adapter(bannerListItem);
+                        homeCateItemList=bestLoveList;
+                        setBannerMovieViewPager2Adapter(homeCateItemList);
                         return;
                     case 2:
                         setScrollDefaultView();
-                        changeBannerList(cateListForBanner.get(2).getCateId());
-                        setBannerMovieViewPager2Adapter(bannerListItem);
+                        homeCateItemList=newestList;
+                        setBannerMovieViewPager2Adapter(homeCateItemList);
                         return;
                     default:
                         setScrollDefaultView();
-                        changeBannerList(cateListForBanner.get(0).getCateId());
-                        setBannerMovieViewPager2Adapter(bannerListItem);
+                        homeCateItemList=bestRatingList;
+                        setBannerMovieViewPager2Adapter(homeCateItemList);
 
                 }
             }
@@ -296,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (bannerMovieViewPager.getCurrentItem() < bannerListItem.size() - 1)
+                    if (bannerMovieViewPager.getCurrentItem() < homeCateItemList.size() - 1)
                     {
                         bannerMovieViewPager.setCurrentItem(bannerMovieViewPager.getCurrentItem()+1);
                     } else {
@@ -343,7 +337,10 @@ public class MainActivity extends AppCompatActivity {
 
         homeCateItemList=cateItemDAO.getListCateItem();
         cateListForBanner=cateDAO.getListCateForBanner();
-        cateListBelow=cateDAO.getListCateBelowBanner();
+        bestRatingList=cateItemDAO.getListCateItemBestRating();
+        bestLoveList=cateItemDAO.getListCateItemHotest();
+        newestList=cateItemDAO.getListCateItemNewest();
+        cateListBelow=cateDAO.getListCate();
         user=userDAO.getUserWithId(idUser);
 
     }
