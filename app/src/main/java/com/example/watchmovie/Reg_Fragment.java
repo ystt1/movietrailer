@@ -60,7 +60,7 @@ public class Reg_Fragment extends Fragment {
                         Toast.makeText( requireContext(),"Mỗi trường có ít nhất 4 kí tự", Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        if(checkIn(sDislayName) || checkIn(sUserName) || checkIn(sPassWord) || checkIn(sRePassWord))
+                        if( checkIn(sUserName) || checkIn(sPassWord) || checkIn(sRePassWord))
                         {
                             Toast.makeText( requireContext(),"Vui lòng không nhập kí tự đặc biệt", Toast.LENGTH_SHORT).show();
                         }

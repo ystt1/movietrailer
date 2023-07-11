@@ -147,4 +147,12 @@ public class UserDAO {
         return null;
     }
 
+    public boolean isDislayNameHadBeenUsed(String displayName)
+    {
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("Select * from User where displayName=\""+displayName+"\"",null);
+        if(cursor.getCount()>0)
+            return true;
+        return false;
+    }
 }
