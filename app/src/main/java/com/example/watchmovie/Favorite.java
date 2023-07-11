@@ -15,13 +15,16 @@ import android.widget.TextView;
 
 import com.example.watchmovie.BienToanCuc.BienToanCuc;
 import com.example.watchmovie.DAO.AnhBiaDAO;
+import com.example.watchmovie.DAO.CateDAO;
 import com.example.watchmovie.DAO.CateItemDAO;
 import com.example.watchmovie.DAO.InteractionDAO;
 import com.example.watchmovie.adapter.BannerMovieViewPager2Adapter;
 import com.example.watchmovie.adapter.FavoriesRecyclerAdapter;
+import com.example.watchmovie.model.AllCate;
 import com.example.watchmovie.model.AnhBia;
 import com.example.watchmovie.model.CateItem;
 
+import java.security.AllPermission;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +38,7 @@ public class Favorite extends AppCompatActivity {
     ImageView imageView,iconSortRating,iconSortLuotThich,iconSortTime;
     SwipeRefreshLayout swipeRefreshLayout;
     CateItemDAO cateItemDAO;
+    CateDAO cateDAO;
     List<CateItem> cateItemList=new ArrayList<>();
     Context context=this;
     TextView textView,tvSortRating,tvSortLuotThich,tvSortTime;
@@ -149,11 +153,19 @@ public class Favorite extends AppCompatActivity {
         {
             cateItemList=interactionDAO.getListMovieYeuThich(idUser);
         }
-        else
+        else if(type==1)
         {
             textView.setText("Tìm kiếm");
             cateItemList=cateItemDAO.getListItemNameLike(key);
         }
+        else if(type==2)
+        {
+            int id= Integer.parseInt(key);
+            AllCate cate=cateDAO.getCateWithId(id);
+            textView.setText(cate.getCateTitle());
+            cateItemList=cateItemDAO.getListCateItemWithCateId(id);
+        }
+
     }
 
     void onClickImgBackBtn()
@@ -191,7 +203,7 @@ public class Favorite extends AppCompatActivity {
 
         cateItemDAO=new CateItemDAO(context);
         interactionDAO=new InteractionDAO(context);
-
+        cateDAO=new CateDAO(context);
         cateItemList.clear();
 
         type= getIntent().getIntExtra("type",0);

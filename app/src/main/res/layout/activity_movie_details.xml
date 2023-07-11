@@ -17,7 +17,9 @@
             android:id="@+id/movie_img"
             android:layout_width="wrap_content"
             android:layout_height="160dp"
+            android:layout_marginBottom="5dp"
             android:scaleType="fitXY"
+            app:layout_constraintBottom_toTopOf="@+id/tvMovie"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,10 +32,12 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="151dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/movie_img" />
@@ -43,37 +47,37 @@
             android:layout_width="130dp"
             android:layout_height="40dp"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/play_button"
             android:fontFamily="sans-serif"
             android:text="Xem Phim"
             android:textAllCaps="false"
             android:textColor="#F4EFEF"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovie" />
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/tvYeuThich"
             android:layout_width="130dp"
             android:layout_height="40dp"
-            android:layout_marginTop="90dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             android:background="@drawable/play_button"
             android:fadingEdge="horizontal"
             android:fontFamily="sans-serif"
             android:text="Thích"
             android:textAllCaps="false"
             android:textColor="#F4EFEF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMovie" />
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="85dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="86dp"
+            android:layout_marginBottom="11dp"
             android:numStars="5"
             android:padding="0dp"
             android:progressBackgroundTint="#FFFDFD"
@@ -85,8 +89,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textView2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/playButton" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_comment"
@@ -157,6 +160,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="63dp"
             android:layout_marginTop="40dp"
+            android:layout_marginBottom="23dp"
+            app:layout_constraintBottom_toTopOf="@+id/playButton"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvMovie"
             app:srcCompat="@drawable/love_icon" />
@@ -165,8 +170,10 @@
             android:id="@+id/imageView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="38dp"
+            android:layout_marginTop="39dp"
             android:layout_marginEnd="8dp"
+            android:layout_marginBottom="25dp"
+            app:layout_constraintBottom_toTopOf="@+id/tvYeuThich"
             app:layout_constraintEnd_toStartOf="@+id/tv_ratingInDetail"
             app:layout_constraintTop_toBottomOf="@+id/tvMovie"
             app:srcCompat="@drawable/star_icon" />
@@ -176,8 +183,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="36dp"
+            android:layout_marginBottom="28dp"
             android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/playButton"
             app:layout_constraintStart_toEndOf="@+id/imageView5"
             app:layout_constraintTop_toBottomOf="@+id/tvMovie" />
 
@@ -185,9 +194,11 @@
             android:id="@+id/tv_ratingInDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="36dp"
             android:layout_marginEnd="63dp"
+            android:layout_marginBottom="28dp"
             android:text="TextView"
+            app:layout_constraintBottom_toTopOf="@+id/tvYeuThich"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvMovie" />
     </androidx.constraintlayout.widget.ConstraintLayout>

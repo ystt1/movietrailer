@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#272222"
     tools:context=".AccountActivity">
 
     <ImageView
@@ -82,7 +83,7 @@
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidth="1dp"
             app:boxStrokeWidthFocused="0dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5">
@@ -91,7 +92,7 @@
                 android:id="@+id/input_displayName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tên hiển thị"
+                android:background="#272222"
                 android:maxLength="20" />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream;
 public class SQLHelper extends SQLiteOpenHelper {
     Context context;
     public SQLHelper( Context context) {
-        super(context, "test", null, 5);
+        super(context, "use", null, 2);
     }
 
 
@@ -71,7 +71,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         String insertData="INSERT INTO AnhBia VALUES(1,\"Avengers: Endgame\",\"https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810\",\"https://www.youtube.com/watch?v=TcMBFSGVi1c\"),\n" +
                 "(2,\"Spider-Man: Across The Spider-Verse\",\"https://pbs.twimg.com/media/FvDSl2VagAAHrbl.jpg:large\",\"https://www.youtube.com/watch?v=shW9i6k8cB0\"),\n" +
-                "(3,\"Avatar: Dòng chảy của nước\",\"https://i.imgur.com/sycdQ1H.jpg\",\"https://www.youtube.com/watch?v=bf4yyStDWHE\"),\n" +
+                "(3,\"Avatar: Dòng chảy của nước\",\"https://w0.peakpx.com/wallpaper/771/901/HD-wallpaper-avatar-the-way-of-water-2.jpg\",\"https://www.youtube.com/watch?v=bf4yyStDWHE\"),\n" +
                 "(4,\"Puss in Boots: The Last Wish\",\"https://cdn.hmv.com/r/w-640/hmv/files/f7/f7daf52d-aaf3-4abc-ab2f-681fd9d2fb83.jpg\",\"https://www.youtube.com/watch?v=xgZLXyqbYOc\"),\n" +
                 "(5,\"Tori and Lokita\",\"https://dx35vtwkllhj9.cloudfront.net/picturehouseentertainment/tori-and-lokita/images/regions/gb/onesheet.jpg\",\"https://www.youtube.com/watch?v=QoQn1gAO0Lg\")";
         sqLiteDatabase.execSQL(insertData);//them du lieu banner o muc home
@@ -87,7 +87,6 @@ public class SQLHelper extends SQLiteOpenHelper {
 
 
         String insertData="INSERT into Category VALUES(0,\"Hot\"),\n" +
-                "(1,\"Mới\"),\n" +
                 "(2,\"Kids\"),\n" +
                 "(3,\"TV Shows\"),\n" +
                 "(4,\"Hành động\"),\n" +
@@ -110,7 +109,7 @@ public class SQLHelper extends SQLiteOpenHelper {
 
         String insertData="INSERT INTO CateItem VALUES(1,\"Avengers: Endgame\",\"https://lumiere-a.akamaihd.net/v1/images/p_avengersendgame_19751_e14a0104.jpeg?region=0%2C0%2C540%2C810\",\"https://www.youtube.com/watch?v=TcMBFSGVi1c\",0,0,0),\n" +
                 "(2,\"Spider-Man: Across The Spider-Verse\",\"https://pbs.twimg.com/media/FvDSl2VagAAHrbl.jpg:large\",\"https://www.youtube.com/watch?v=shW9i6k8cB0\",0,0,0),\n" +
-                "(3,\"Avatar: Dòng chảy của nước\",\"https://i.imgur.com/sycdQ1H.jpg\",\"https://www.youtube.com/watch?v=bf4yyStDWHE\",0,0,0),\n" +
+                "(3,\"Avatar: Dòng chảy của nước\",\"https://w0.peakpx.com/wallpaper/771/901/HD-wallpaper-avatar-the-way-of-water-2.jpg\",\"https://www.youtube.com/watch?v=bf4yyStDWHE\",0,0,0),\n" +
                 "(4,\"Puss in Boots: The Last Wish\",\"https://cdn.hmv.com/r/w-640/hmv/files/f7/f7daf52d-aaf3-4abc-ab2f-681fd9d2fb83.jpg\",\"https://www.youtube.com/watch?v=xgZLXyqbYOc\",0,0,0),\n" +
                 "(5,\"Tori and Lokita\",\"https://dx35vtwkllhj9.cloudfront.net/picturehouseentertainment/tori-and-lokita/images/regions/gb/onesheet.jpg\",\"https://www.youtube.com/watch?v=QoQn1gAO0Lg\",0,0,0),\n" +
                 "(6,\"Minions 2: The Rise of Gru\",\"https://m.media-amazon.com/images/M/MV5BNDM3YWEwYTMtNmY3ZS00YzJiLWFlNWItOWFmNjY0YzA4ZDE3XkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_.jpg\",\"https://www.youtube.com/watch?v=6DxjJzmYsXo\",2,0,0),\n" +
@@ -125,9 +124,9 @@ public class SQLHelper extends SQLiteOpenHelper {
                 "(15,\"The Glory Part 2\",\"https://kenh14cdn.com/203336854389633024/2023/2/9/3300257244074930015998526165443108377177265n-16759059550781859998525.jpg\",\"https://www.youtube.com/watch?v=rvJP7sAhXk4\",3,0,0),\n" +
                 "(16,\"Mission: Impossible – Dead Reckoning Part 1\",\"https://dx35vtwkllhj9.cloudfront.net/paramountpictures/mission-impossible-7/images/regions/us/onesheet.jpg\",\"https://www.youtube.com/watch?v=2m1drlOZSDw\",4,0,0),\n" +
                 "\n" +
-                "(17,\"Kingsman: The Secret Service\",\"https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/162022A2C259144C89780911DFDB95B194DA9F4A463B3D71AC6E023D2440960B/scale?width=1200&aspectRatio=1.78&format=jpeg\",\"https://www.youtube.com/watch?v=kl8F-8tR8to\",4,0,0),\n" +
+                "(17,\"Kingsman: The Secret Service\",\"https://i.ebayimg.com/images/g/FDcAAOSwstxVMVGj/s-l1600.jpg\",\"https://www.youtube.com/watch?v=kl8F-8tR8to\",4,0,0),\n" +
                 "\n" +
-                "(18,\"Dunkirk\",\"https://pgtipsonfilms.files.wordpress.com/2017/09/dunkirk-title-banner.jpg\",\"https://www.youtube.com/watch?v=F-eMt3SrfFU\",4,0,0),\n" +
+                "(18,\"Dunkirk\",\"https://c8.alamy.com/comp/J5P89E/dunkirk-2017-christoher-nolan-dir-warner-brosmoviestore-collection-J5P89E.jpg\",\"https://www.youtube.com/watch?v=F-eMt3SrfFU\",4,0,0),\n" +
                 "\n" +
                 "(19,\"Fast X\",\"https://movies.universalpictures.com/media/fastx-1900x3000-unipics-poster-1-1-1-6488d900807c7-1.jpg\",\"https://www.youtube.com/watch?v=1fvzVMmARqY\",4,0,0),\n" +
                 "\n" +

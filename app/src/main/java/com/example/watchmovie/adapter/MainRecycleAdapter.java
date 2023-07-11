@@ -1,6 +1,7 @@
 package com.example.watchmovie.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.watchmovie.DAO.CateItemDAO;
+import com.example.watchmovie.Favorite;
 import com.example.watchmovie.R;
 import com.example.watchmovie.model.AllCate;
 import com.example.watchmovie.model.CateItem;
@@ -25,7 +27,7 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
 
 
     CateItemDAO cateItemDAO;
-    Context context;
+    Context context,mContext;
     List<AllCate> cateList;
 
     public MainRecycleAdapter(Context context,List<AllCate> cateList)
@@ -33,6 +35,7 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
         this.context=context;
         this.cateList=cateList;
         this.cateItemDAO=new CateItemDAO(this.context);
+        mContext=context;
     }
 
     @NonNull
@@ -43,9 +46,19 @@ public class MainRecycleAdapter extends RecyclerView.Adapter<MainRecycleAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MainViewHolder holder, int position) {
-    holder.cateName.setText(cateList.get(position).getCateTitle());
+        int flag=position;
+    holder.cateName.setText(cateList.get(flag).getCateTitle());
+    holder.cateName.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(mContext, Favorite.class);
+            intent.putExtra("type",2);
+            intent.putExtra("key",String.valueOf(cateList.get(flag).getCateId()));
+            mContext.startActivity(intent);
+        }
+    });
 
-    List<CateItem> cateItemList=cateItemDAO.getListCateItemWithCateId(cateList.get(position).getCateId());
+    List<CateItem> cateItemList=cateItemDAO.getListCateWithCateIdLimit5(cateList.get(position).getCateId());
     setCateItem(holder.cateItem,cateItemList);
     }
 

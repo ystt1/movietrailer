@@ -260,4 +260,28 @@ public class CateItemDAO {
         }
         return list;
     }
+
+    public ArrayList<CateItem> getListCateWithCateIdLimit5(int id)
+    {
+        ArrayList<CateItem> list=new ArrayList<>();
+        database=sqlHelper.getReadableDatabase();
+        Cursor cursor=database.rawQuery("SELECT * from CateItem WHERE idCate="+id+" LIMIT 5",null);
+        if(cursor.getCount()>0)
+        {
+
+            cursor.moveToFirst();
+            do{
+                list.add(new CateItem(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
+
+                ));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
 }

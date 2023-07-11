@@ -146,4 +146,18 @@ public class CateDAO {
         }
         return -1;
     }
+
+    public AllCate getCateWithId(int id)
+    {
+        database=sqlHelper.getReadableDatabase();
+
+        Cursor cursor=database.rawQuery("SELECT * from Category WHERE cateId = "+id,null);
+        if(cursor.getCount()>0)
+        {
+            cursor.moveToFirst();
+                return new AllCate(cursor.getInt(0),
+                        cursor.getString(1));
+        }
+        return null;
+    }
 }
