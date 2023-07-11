@@ -2,6 +2,7 @@ package com.example.watchmovie;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import com.example.watchmovie.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.net.ContentHandler;
+import java.text.Normalizer;
 
 public class AccountActivity extends AppCompatActivity {
     UserDAO userDAO;
@@ -24,7 +26,7 @@ public class AccountActivity extends AppCompatActivity {
     int idUser;
     TextView tvUserName;
     TextInputEditText inputDisPlayName;
-    Button btnChangeDisplayName;
+    Button btnChangeDisplayName,btnChangePassWord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class AccountActivity extends AppCompatActivity {
             AnhXaVaKhaiBao();
             setThuocTinh();
             onClickChangeDisplayName();
+            onClickShowDialogChangePassWord();
         }
     }
 
@@ -81,12 +84,101 @@ public class AccountActivity extends AppCompatActivity {
         });
     }
 
+    void onClickShowDialogChangePassWord()
+    {
+        btnChangePassWord.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Dialog dialog=new Dialog(context);
+                dialog.setContentView(R.layout.change_password_dialog);
+                TextInputEditText inputOldPass=dialog.findViewById(R.id.input_oldPassWord);
+                TextInputEditText inputNewPass=dialog.findViewById(R.id.input_newPassWord);
+                TextInputEditText inputRePass=dialog.findViewById(R.id.input_rePassWord);
+                Button btnConfirm=dialog.findViewById(R.id.btn_confirmChangePassWord);
+                btnConfirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String sOldPass= String.valueOf(inputOldPass.getText());
+                        String sNewPass= String.valueOf(inputNewPass.getText());
+                        String sReWord= String.valueOf(inputRePass.getText());
+                        String currPass=user.getPassWord();
+                        if(sNewPass.length()<5)
+                        {
+                            Toast.makeText(AccountActivity.this, "Mật khẩu mới ít nhất có 5 kí tự", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            if(isValid(sNewPass)) {
+
+                                if (sNewPass.equals(sReWord)) {
+                                    if (sOldPass.equals(currPass)) {
+                                        user.setPassWord(sNewPass);
+                                        userDAO.updateUser(user);
+                                        Toast.makeText(AccountActivity.this, "cập nhật mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                                        dialog.cancel();
+                                    } else {
+                                        Toast.makeText(AccountActivity.this, "Mật khẩu cũ sai", Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(AccountActivity.this, "Nhập lại mật khẩu không giống", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else {
+                                Toast.makeText(AccountActivity.this, "Mật khẩu mới không hợp lệ", Toast.LENGTH_SHORT).show();
+                            }
+                        }}
+                });
+
+                dialog.show();
+            }
+        });
+    }
+
     void AnhXaVaKhaiBao()
     {
         btnChangeDisplayName=findViewById(R.id.btn_changeDisplayName);
+        btnChangePassWord=findViewById(R.id.btn_changePassWord);
         tvUserName=findViewById(R.id.tv_UserName);
         inputDisPlayName=findViewById(R.id.input_displayName);
         userDAO=new UserDAO(context);
         user=userDAO.getUserWithId(idUser);
+    }
+
+
+
+
+
+
+    boolean isValid(String input)
+    {
+        if(isSpecialChar(input) || isCoDau(input))
+            return false;
+        return true;
+
+    }
+
+
+    boolean isSpecialChar(String input)
+    {
+
+        String specialCharacters = "[!@#$%&*()_+=|<>?{}\\[\\]~-]";
+        if (input.matches(".*" + specialCharacters + ".*")) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean isCoDau(String input)
+    {
+
+        String normalizedInput = Normalizer.normalize(input, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "");
+
+
+        if (!input.equals(normalizedInput)) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
