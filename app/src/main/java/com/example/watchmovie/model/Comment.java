@@ -3,10 +3,20 @@ package com.example.watchmovie.model;
 public class Comment {
     String displayName;
     String comment;
+    String dateTime;
 
-    public Comment(String displayName, String comment) {
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public Comment(String displayName, String comment, String dateTime) {
         this.displayName = displayName;
         this.comment = comment;
+        this.dateTime = dateTime;
     }
 
     public String getDisplayName() {

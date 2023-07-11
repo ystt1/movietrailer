@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.watchmovie.R;
 
 public class CommentViewHolder extends RecyclerView.ViewHolder {
-    TextView comment;
-    TextView displayName;
+    TextView comment,displayName,dateTimeComment;
 
     public CommentViewHolder(@NonNull View itemView) {
         super(itemView);
         comment=itemView.findViewById(R.id.tvComment);
         displayName=itemView.findViewById(R.id.tvUser);
+        dateTimeComment=itemView.findViewById(R.id.tv_dateTimeComment);
     }
 }

@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream;
 public class SQLHelper extends SQLiteOpenHelper {
     Context context;
     public SQLHelper( Context context) {
-        super(context, "test", null, 2);
+        super(context, "test", null, 3);
     }
 
 
@@ -182,7 +182,8 @@ public class SQLHelper extends SQLiteOpenHelper {
                 "  id integer PRIMARY key,\n" +
                 "  UserId integer,\n" +
                 "  MovieId integer,\n" +
-                "  comment text\n" +
+                "  comment text,\n" +
+                "  dateTime text\n" +
                 ")\n";
         sqLiteDatabase.execSQL(sql);//tao bang
     }

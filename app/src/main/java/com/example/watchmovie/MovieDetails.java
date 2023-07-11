@@ -28,7 +28,9 @@ import com.example.watchmovie.model.Comment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MovieDetails extends AppCompatActivity {
@@ -43,18 +45,12 @@ public class MovieDetails extends AppCompatActivity {
     int iYeuThich,mId,iComment=1;
     Context context=this;
     CateItemDAO cateItemDAO;
-
     Button textViewYeuThich;
-
     RatingBar ratingBar;
     int mRating;
-
     TextInputEditText comment;
-
     TextInputLayout commentLayout;
-
     CommentDAO commentDAO;
-
     List<Comment> commentList=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +61,6 @@ public class MovieDetails extends AppCompatActivity {
             Intent i=new Intent(this,LoginAcivity.class);
             startActivity(i);
         }else {
-
-
             AnhXaVaKhaiBao();
             onClickWatchTrailer();
             setTextViewYeuThich();
@@ -162,10 +156,13 @@ public class MovieDetails extends AppCompatActivity {
         commentLayout.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                String dateTime = dateFormat.format(calendar.getTime());
                 String text= String.valueOf(comment.getText());
                 if(text.equals("")==false)
                 {
-                    commentDAO.addComment(idUser,mId,text);
+                    commentDAO.addComment(idUser,mId,text,dateTime);
                     comment.setText("");
                     CommentRecycler();
                 }

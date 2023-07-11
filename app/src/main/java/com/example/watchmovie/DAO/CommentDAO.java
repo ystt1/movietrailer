@@ -37,7 +37,7 @@ public class CommentDAO {
         }
         return -1;
     }
-    public void addComment(int userId,int movieId,String comment)
+    public void addComment(int userId,int movieId,String comment,String dateTime)
     {
         database = sqlHelper.getWritableDatabase();
         int id=getMaxId()+1;
@@ -46,6 +46,7 @@ public class CommentDAO {
         values.put("UserId",userId);
         values.put("MovieId",movieId);
         values.put("comment",comment);
+        values.put("dateTime",dateTime);
         database.insert("Comment", null, values);
     }
 
@@ -59,8 +60,9 @@ public class CommentDAO {
             do{
                 int idUser=cursor.getInt(1);
                 String text=cursor.getString(3);
+                String dateTime=cursor.getString(4);
                 String name= userDAO.getNameWithId(idUser);
-                commentList.add(new Comment(name,text));
+                commentList.add(new Comment(name,text,dateTime));
 
             }while (cursor.moveToNext());
         }
