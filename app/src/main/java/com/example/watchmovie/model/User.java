@@ -8,10 +8,19 @@ public class User {
     String passWord;
     String avatar;
     String displayName;
-    boolean isAdmin;
+
+    public Integer getIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(Integer isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    Integer isAdmin;
 
 
-    public User(int id, String userName, String passWord, String avatar, String displayName, boolean isAdmin) {
+    public User(int id, String userName, String passWord, String avatar, String displayName, int isAdmin) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
@@ -61,13 +70,6 @@ public class User {
         this.displayName = displayName;
     }
 
-    public boolean isAdmin() {
-        return isAdmin;
-    }
-
-    public void setAdmin(boolean admin) {
-        isAdmin = admin;
-    }
 
 
 }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.watchmovie.R;
 
 public class FavorieViewHolder extends RecyclerView.ViewHolder {
-    ImageView imageView;
+    ImageView imageView,menu;
     TextView textView,iYeuThich,iRating;
     public FavorieViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -18,5 +18,6 @@ public class FavorieViewHolder extends RecyclerView.ViewHolder {
         textView=itemView.findViewById(R.id.favorite_movie_name);
         iYeuThich=itemView.findViewById(R.id.tv_luotThich);
         iRating=itemView.findViewById(R.id.tv_rating);
+        menu=itemView.findViewById(R.id.menu_favorite);
     }
 }

@@ -31,7 +31,7 @@ public class UserDAO {
         values.put("passWord",user.getPassWord());
         values.put("avatar",user.getAvatar());
         values.put("displayName",user.getDisplayName());
-        values.put("isAdmin",user.isAdmin());
+        values.put("isAdmin",user.getIsAdmin());
         long check=database.insert("User",null,values);
         return check;
     }
@@ -52,7 +52,7 @@ public class UserDAO {
         values.put("passWord",user.getPassWord());
         values.put("avatar",user.getAvatar());
         values.put("displayName",user.getDisplayName());
-        values.put("isAdmin",user.isAdmin());
+        values.put("isAdmin",user.getIsAdmin());
         long check=database.update("User",values,"id=?",
                 new String[]{String.valueOf(user.getId())});
         return check;
@@ -73,7 +73,7 @@ public class UserDAO {
                         cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),
-                        cursor.getInt(5) != 0
+                        cursor.getInt(5)
                 ));
             }while (cursor.moveToNext());
         }
@@ -141,7 +141,7 @@ public class UserDAO {
                         cursor.getString(2),
                         cursor.getString(3),
                         cursor.getString(4),
-                        cursor.getInt(5) != 0
+                        cursor.getInt(5)
                 );
         }
         return null;

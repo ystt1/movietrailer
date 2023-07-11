@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         imgMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(user.isAdmin()) {
+                if(user.getIsAdmin()==1) {
                     showMenu();
                 }
                 else {
@@ -232,6 +232,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.menu_logout:
                         onClickLogOut();
+                        break;
+                    case R.id.menu_account:
+                        changeToAccountAct();
                         break;
                     default:
                         break;

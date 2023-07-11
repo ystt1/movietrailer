@@ -72,7 +72,7 @@ public class AccountActivity extends AppCompatActivity {
                             Toast.makeText(context, "Tên hiển thị đã được dùng vui lòng đổi tên khác", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            User newUser=new User(idUser,user.getUserName(),user.getPassWord(),user.getAvatar(),displayName,user.isAdmin());
+                            User newUser=new User(idUser,user.getUserName(),user.getPassWord(),user.getAvatar(),displayName,user.getIsAdmin());
                             userDAO.updateUser(newUser);
                             Intent i=new Intent(AccountActivity.this,AccountActivity.class);
                             finish();

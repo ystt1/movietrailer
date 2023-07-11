@@ -45,7 +45,7 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
+        android:layout_marginStart="165dp"
         android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toTopOf="@+id/favorite_movie_name"
         app:layout_constraintStart_toEndOf="@+id/favorite_movie_img"
@@ -70,4 +70,15 @@
         android:text="3.4"
         app:layout_constraintBottom_toTopOf="@+id/favorite_movie_name"
         app:layout_constraintStart_toEndOf="@+id/imageView4" />
+
+    <ImageView
+        android:id="@+id/menu_favorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/tv_rating"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu_open_icon" />
 </androidx.constraintlayout.widget.ConstraintLayout>

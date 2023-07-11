@@ -17,7 +17,7 @@ import java.io.ByteArrayOutputStream;
 public class SQLHelper extends SQLiteOpenHelper {
     Context context;
     public SQLHelper( Context context) {
-        super(context, "test", null, 4);
+        super(context, "test", null, 5);
     }
 
 
@@ -154,13 +154,13 @@ public class SQLHelper extends SQLiteOpenHelper {
                 "    passWord text,\n" +
                 "    avatar blob,\n" +
                 "    displayName text,\n" +
-                "    isAdmin bool\n" +
+                "    isAdmin integer\n" +
                 ")";
         sqLiteDatabase.execSQL(sql);//tao bang
 
 
 
-        String insertData=("INSERT into User VALUES(0,\"Tuan\",\"tuan4105\",null,\"admin\",true)");
+        String insertData=("INSERT into User VALUES(0,\"Tuan\",\"tuan4105\",null,\"admin\",1)");
         sqLiteDatabase.execSQL(insertData);//them du lieu banner o muc home
     }
 

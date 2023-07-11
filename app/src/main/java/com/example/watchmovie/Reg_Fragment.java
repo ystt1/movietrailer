@@ -69,7 +69,7 @@ public class Reg_Fragment extends Fragment {
                             if(sPassWord.equals(sRePassWord))
                             {
                                 int id=userDAO.getMaxId();
-                                User user=new User(id+1,sUserName,sPassWord,null,sDislayName,false);
+                                User user=new User(id+1,sUserName,sPassWord,null,sDislayName,0);
                                 if(userDAO.createUser(user)==-1)
                                 {
                                     Toast.makeText( requireContext(),"Tên tài khoản hoặc hiển thị đã có người dùng", Toast.LENGTH_SHORT).show();
