@@ -40,9 +40,7 @@ public class addMovie extends AppCompatActivity {
     List<CateItem> cateItemList=new ArrayList<>();
     CateItemDAO cateItemDAO;
     int cateId=0;
-
     SearchView searchMovie;
-
     Button showDialogbtn,confirmAdd;
     ImageView addBanner;
     TextInputEditText bannerInput,trailerInput,nameInput;
@@ -58,6 +56,7 @@ public class addMovie extends AppCompatActivity {
             AnhXaVaKhaiBao();
             setMovieAdapter(cateItemList);
             setOnClickAddMovie();
+            setSearchMovieChange();
         }
     }
 
@@ -68,7 +67,7 @@ public class addMovie extends AppCompatActivity {
         movieRecycler.setLayoutManager(layoutManager);
         movieAdapter=new MovieRecycler(this,cateItemList,cateId);
         movieRecycler.setAdapter(movieAdapter);
-        setSearchMovieChange();
+
     }
 
     void setOnClickAddMovie()
@@ -103,7 +102,7 @@ public class addMovie extends AppCompatActivity {
                                         Log.e("tag", String.valueOf(id));
                                         if (URLUtil.isValidUrl(String.valueOf(trailerInput.getText())) && id!=-1) {
 
-                                            CateItem cateItem=new CateItem(id+1,String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),cateId);
+                                            CateItem cateItem=new CateItem(id+1,String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),cateId,0,0);
                                             cateItemDAO.addCateItem(cateItem);
                                             cateItemList.clear();
                                             cateItemList=cateItemDAO.getListCateItemWithCateId(cateId);
@@ -133,7 +132,7 @@ public class addMovie extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                cateItemList=cateItemDAO.getListItemNameLike(s);
+                cateItemList=cateItemDAO.getListItemNameLikeInCate(s,cateId);
                 setMovieAdapter(cateItemList);
                 return false;
             }

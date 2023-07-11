@@ -40,7 +40,8 @@ public class FavoriesRecyclerAdapter extends RecyclerView.Adapter<FavorieViewHol
         int flag=position;
         holder.textView.setText(cateItemList.get(flag).getMovieName());
         Glide.with(context).load(cateItemList.get(flag).getImgUrl()).into(holder.imageView);
-
+        holder.iRating.setText(String.valueOf(cateItemList.get(flag).getRating()));
+        holder.iYeuThich.setText(String.valueOf(cateItemList.get(flag).getLuotThich()));
         holder.textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

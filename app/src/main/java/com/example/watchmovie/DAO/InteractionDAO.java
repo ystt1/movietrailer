@@ -51,7 +51,7 @@ public class InteractionDAO {
         if (cursor.moveToFirst()) {
             return cursor.getInt(0);
         }
-        return 0;
+        return -1;
     }
 
     public int getMaxId()
@@ -76,7 +76,7 @@ public class InteractionDAO {
             values.put("UserId", userId);
             values.put("MovieId", movieId);
             values.put("yeuThich", yeuThich);
-            values.put("rating", 0);
+            values.put("rating", -1);
             database.insert("Interaction", null, values);
         } else {
             ContentValues values = new ContentValues();
@@ -124,4 +124,21 @@ public class InteractionDAO {
         return list;
     }
 
+    public float getEverageRating(int idMovie)
+    {
+        database = sqlHelper.getReadableDatabase();
+        cateItemDAO=new CateItemDAO(context);
+        Cursor cursor = database.rawQuery("SELECT rating FROM Interaction WHERE MovieId = " + idMovie +" AND rating!=-1" , null);
+        int quantity=cursor.getCount();
+        int totalRating=0;
+        if (quantity>0) {
+            cursor.moveToFirst();
+            do{
+                quantity+=1;
+                totalRating=totalRating+cursor.getInt(0);
+            }while (cursor.moveToNext());
+            return (float)totalRating/quantity;
+        }
+        return 0;
+    }
 }

@@ -24,7 +24,9 @@ import com.example.watchmovie.DAO.CommentDAO;
 import com.example.watchmovie.DAO.InteractionDAO;
 import com.example.watchmovie.adapter.CommentRecyclerAdapter;
 import com.example.watchmovie.adapter.MainRecycleAdapter;
+import com.example.watchmovie.model.CateItem;
 import com.example.watchmovie.model.Comment;
+import com.example.watchmovie.model.User;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -39,7 +41,7 @@ public class MovieDetails extends AppCompatActivity {
     int idUser;
     InteractionDAO interactionDAO;
     ImageView imageView;
-    TextView textView,tvMore;
+    TextView textView,tvMore,tvLove,tvRating;
     Button button;
     String mName,mImg,mFile;
     int iYeuThich,mId,iComment=1;
@@ -52,6 +54,8 @@ public class MovieDetails extends AppCompatActivity {
     TextInputLayout commentLayout;
     CommentDAO commentDAO;
     List<Comment> commentList=new ArrayList<>();
+
+    CateItem cateItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +95,10 @@ public class MovieDetails extends AppCompatActivity {
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 mRating= (int) v;
                 interactionDAO.setRating(idUser,mId,mRating);
+                float everageRating=interactionDAO.getEverageRating(mId);
+                cateItem.setRating(everageRating);
+                cateItemDAO.updateCateItem(cateItem);
+                tvRating.setText(String.valueOf(cateItem.getRating()));
             }
         });
     }
@@ -125,12 +133,20 @@ public class MovieDetails extends AppCompatActivity {
         textViewYeuThich.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(iYeuThich==1)
+
+                if(iYeuThich==1) {
+                    cateItem.setLuotThich(cateItem.getLuotThich()-1);
+                    cateItemDAO.updateCateItem(cateItem);
                     iYeuThich = 0;
-                else
-                    iYeuThich=1;
+                }
+                else {
+                    cateItem.setLuotThich(cateItem.getLuotThich()+1);
+                    cateItemDAO.updateCateItem(cateItem);
+                    iYeuThich = 1;
+                }
                 interactionDAO.setYeuThich(idUser,mId,iYeuThich);
                 setTextViewYeuThich();
+                tvLove.setText(String.valueOf(cateItem.getLuotThich()));
             }
         });
     }
@@ -191,6 +207,8 @@ public class MovieDetails extends AppCompatActivity {
         comment=findViewById(R.id.Input_comment);
         commentLayout=findViewById(R.id.Input_comment_layout);
         tvMore=findViewById(R.id.tv_More);
+        tvLove=findViewById(R.id.tv_love);
+        tvRating=findViewById(R.id.tv_ratingInDetail);
 
         idUser=BienToanCuc.getInstance().getLoggedInUserID();
 
@@ -208,10 +226,16 @@ public class MovieDetails extends AppCompatActivity {
 
         iYeuThich=interactionDAO.getYeuThich(idUser, mId);
         mRating= interactionDAO.getRating(idUser,mId);
-        ratingBar.setRating(mRating);
+        if(mRating!=-1) {
+            ratingBar.setRating(mRating);
+        }
+        else {
+            ratingBar.setRating(0);
+        }
         textView.setText(mName);
-
-
+        cateItem=cateItemDAO.getCateItemWithID(mId);
+        tvLove.setText(String.valueOf(cateItem.getLuotThich()));
+        tvRating.setText(String.valueOf(cateItem.getRating()));
         commentList.clear();
     }
 

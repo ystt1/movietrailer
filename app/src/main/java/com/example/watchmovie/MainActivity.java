@@ -10,6 +10,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -67,6 +68,13 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        int a=10;
+//        int b=3;
+//        float test=(float) a/b;
+//
+//        Log.e("test", String.valueOf(test));
+
+
         if(idUser==-1)
         {
             Intent i=new Intent(this,LoginAcivity.class);

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 public class CateItemDAO {
 
+
     private SQLHelper sqlHelper;
     private SQLiteDatabase database;
 
@@ -50,6 +51,8 @@ public class CateItemDAO {
         values.put("imgUrl",cateItem.getImgUrl());
         values.put("fileurl",cateItem.getFileurl());
         values.put("idCate",cateItem.getIdCate());
+        values.put("rating",cateItem.getRating());
+        values.put("luotThich",cateItem.getLuotThich());
         long check=database.update("CateItem",values,"id=?",
                 new String[]{String.valueOf(cateItem.getId())});
         return check;
@@ -70,7 +73,9 @@ public class CateItemDAO {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4)
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
                 ));
             }while (cursor.moveToNext());
         }
@@ -93,14 +98,38 @@ public class CateItemDAO {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4)
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
                 ));
             }while (cursor.moveToNext());
         }
         return list;
     }
 
+    public ArrayList<CateItem> getListItemNameLikeInCate(String key,int cateID)
+    {
+        ArrayList<CateItem> list=new ArrayList<>();
+        database=sqlHelper.getReadableDatabase();
 
+        Cursor cursor=database.rawQuery("SELECT * from CateItem WHERE moviename like \"%"+key+"%\" and idCate=\""+cateID+"\"",null);
+        if(cursor.getCount()>0)
+        {
+
+            cursor.moveToFirst();
+            do{
+                list.add(new CateItem(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
+                ));
+            }while (cursor.moveToNext());
+        }
+        return list;
+    }
 
     public  CateItem getCateItemWithID(int id)
     {
@@ -115,7 +144,10 @@ public class CateItemDAO {
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
-                    cursor.getInt(4));
+                    cursor.getInt(4),
+                    cursor.getFloat(5),
+                    cursor.getInt(6)
+            );
             return cateItem;
        }
         return null;
@@ -135,7 +167,10 @@ public class CateItemDAO {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
-                        cursor.getInt(4)
+                        cursor.getInt(4),
+                        cursor.getFloat(5),
+                        cursor.getInt(6)
+
                 ));
             }while (cursor.moveToNext());
         }
@@ -153,5 +188,4 @@ public class CateItemDAO {
         }
         return -1;
     }
-
 }

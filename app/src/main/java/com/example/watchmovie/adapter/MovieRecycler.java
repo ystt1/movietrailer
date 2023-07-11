@@ -174,7 +174,7 @@ public class MovieRecycler extends  RecyclerView.Adapter<MovieViewHolder>{
                                 if (URLUtil.isValidUrl(String.valueOf(trailerInput.getText())) && id!=-1) {
                                     newCateItem=new ArrayList<>();
                                     newCateItem.clear();
-                                    CateItem newItem=new CateItem(cateItem.getId(),String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),idCate);
+                                    CateItem newItem=new CateItem(cateItem.getId(),String.valueOf(nameInput.getText()),String.valueOf(bannerInput.getText()),String.valueOf(trailerInput.getText()),idCate,0,0);
                                     cateItemDAO.updateCateItem(newItem);
                                     newCateItem=cateItemDAO.getListCateItemWithCateId(idCate);
                                     dialog.cancel();

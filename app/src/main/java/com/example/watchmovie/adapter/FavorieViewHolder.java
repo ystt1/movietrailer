@@ -11,10 +11,12 @@ import com.example.watchmovie.R;
 
 public class FavorieViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView;
-    TextView textView;
+    TextView textView,iYeuThich,iRating;
     public FavorieViewHolder(@NonNull View itemView) {
         super(itemView);
         imageView=itemView.findViewById(R.id.favorite_movie_img);
         textView=itemView.findViewById(R.id.favorite_movie_name);
+        iYeuThich=itemView.findViewById(R.id.tv_luotThich);
+        iRating=itemView.findViewById(R.id.tv_rating);
     }
 }
